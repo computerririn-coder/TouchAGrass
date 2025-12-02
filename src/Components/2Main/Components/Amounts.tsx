@@ -28,6 +28,7 @@ function Amounts({state}) {
               </button>
             </div>
           </div>
+          
         </section>
      );
 }

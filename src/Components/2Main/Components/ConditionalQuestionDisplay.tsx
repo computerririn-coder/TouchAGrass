@@ -1,6 +1,5 @@
-import { useState } from "react";
-import styles from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/Components/2Main/Components/LeafComponent.module.css";
-
+import { useState, useEffect } from "react";
+import Countdown from "react-countdown";
 type conditionalQuestionDisplayPropsTS = {
   type: string | undefined;
   img: string | undefined;
@@ -13,23 +12,62 @@ type InteractiveImgProps = {
   conditionalQuestionDisplayProps: conditionalQuestionDisplayPropsTS;
 };
 
-function ConditionalQuestionDisplay({ conditionalQuestionDisplayProps }: InteractiveImgProps) {
-  const [feedback, setFeedback] = useState<string>("Not Yet Answered");
-  const [attempts, setAttempts] = useState<number>(0);
-const isDisabled = attempts >= 3 || feedback === "Correct";
-  function handleAnswer(choice: string) {
-    if (attempts >= 3) return;
 
-    setAttempts(prev => prev + 1);
+
+function ConditionalQuestionDisplay({ conditionalQuestionDisplayProps, setInteractiveImgComponentVisibility }: InteractiveImgProps) {
+  const [feedback, setFeedback] = useState<boolean | string>("Not Yet Answered");
+  const [attempts, setAttempts] = useState<number>(0);
+  const [maxAttempts, setMaxAttempts] = useState<number>(0);
+  const isDisabled = attempts >= maxAttempts || feedback === true;
+
+useEffect(() => {
+  switch (conditionalQuestionDisplayProps.type) {
+    case "leaf":
+      setMaxAttempts(3);
+      break;
+    case "grass":
+      setMaxAttempts(2);
+      break;
+    case "treasure":
+      setMaxAttempts(1);
+      break;
+    default:
+      setMaxAttempts(3);
+  }
+}, [conditionalQuestionDisplayProps.type]);
+
+function handleFeedback(){
+      setTimeout(() => {
+setInteractiveImgComponentVisibility(false);
+    },5000)
+}
+
+
+function handleAnswer(choice: string) {
+  if (attempts >= maxAttempts) return;
+
+  setAttempts(prev => {
+    const newAttempts = prev + 1;
 
     if (choice === conditionalQuestionDisplayProps.answer) {
-      setFeedback("Correct");
-    } else {
-      setFeedback("Wrong");
+      setFeedback(true);
+      handleFeedback();
+    } else if (newAttempts >= maxAttempts && choice !== conditionalQuestionDisplayProps.answer) {
+      setFeedback(false);
+      handleFeedback();
     }
-  }
 
+    return newAttempts;
+  });
+}
+
+
+
+  
+const countdown = isDisabled ? Date.now() + 5000 : null;
   return (
+
+    
     <section className="relative z-20 mx-auto ">
       <div
         className="
@@ -39,6 +77,26 @@ const isDisabled = attempts >= 3 || feedback === "Correct";
           min-h-80 w-[80%] md:w-full
         "
       >
+        <button
+  onClick={() => setInteractiveImgComponentVisibility(false)}
+  className="
+    absolute  right-[-1rem] top-[-1rem]
+    h-10 w-10
+    flex items-center justify-center
+    rounded-full
+    bg-gradient-to-br from-green-300 to-green-500
+    border border-amber-600
+    shadow-md
+    text-red-800
+    text-2xl
+    font-bold
+    hover:scale-110 hover:shadow-xl hover:bg-green-400
+    transition-all
+  "
+>
+  ×
+</button>
+
         {/* IMAGE */}
         <div className="image-wrapper w-full h-48 md:h-60 overflow-hidden p-5">
           <div className="w-full h-full rounded-xl overflow-hidden">
@@ -56,11 +114,11 @@ const isDisabled = attempts >= 3 || feedback === "Correct";
           {/* left side */}
           <div className="flex flex-col gap-2 items-start md:items-center min-w-fit">
             <span className="text-xs md:text-sm font-semibold bg-blue-900 text-white px-3 py-1 rounded-full shadow-md w-full">
-              Difficulty: Easy &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Difficulty: {conditionalQuestionDisplayProps.type} &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             </span>
 
             <span className="text-xs md:text-sm font-semibold bg-blue-900 text-white px-3 py-1 rounded-full shadow-md min-w-full">
-              Status: {feedback}
+              Status: {feedback ? "Correct" : "Wrong"}
             </span>
           </div>
 
@@ -74,7 +132,14 @@ const isDisabled = attempts >= 3 || feedback === "Correct";
 
 {isDisabled ? (
   <p className="text-base md:text-lg font-semibold w-95">
-    Correct: This page will not be nuked in {}
+    {feedback ? "Correct" : "Wrong"}, This page will be nuked in <Countdown
+        date={countdown}
+        renderer={({ total }) => {
+          // total is remaining milliseconds
+          const seconds = Math.ceil(total / 1000); // round up
+          return <span>{seconds > 0 ? seconds : 0}</span>;
+        }}
+      />
   </p>
 ) : (
   <p className="text-base md:text-lg font-semibold w-95">
@@ -84,7 +149,7 @@ const isDisabled = attempts >= 3 || feedback === "Correct";
 
 
             <p className="text-xs md:text-sm w-16  font-medium bg-white text-amber-700 px-3 py-1 rounded-full shadow">
-              {attempts} / 3
+              {attempts} / {maxAttempts}
             </p>
           </div>
         </div>

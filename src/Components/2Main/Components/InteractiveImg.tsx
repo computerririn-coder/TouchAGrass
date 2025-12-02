@@ -125,9 +125,11 @@ const randomNumber = Math.floor(Math.random() * (maxNumber + 1));
                   break; 
                 case "grass":
                   setConditionalQuestionDisplayProps(imgQuestionAnswerEtc.grass[randomNumber]);
+                  setInteractiveImgComponentVisibility(true);
                   break;
                 case "treasure":
                   setConditionalQuestionDisplayProps(imgQuestionAnswerEtc.treasure[randomNumber]);
+                  setInteractiveImgComponentVisibility(true);
                   break;
 
               }

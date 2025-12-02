@@ -33,11 +33,12 @@ const [conditionalQuestionDisplayProps, setConditionalQuestionDisplayProps] = us
 
 
   /* USEREDUCER STATE */
-  const itemsCollected: Item[] = [
-    { name: 'leaf', amount: 67, img: Grass2 },
-    { name: 'grass', amount: 0 },
-    { name: 'treasure', amount: 0 },
-  ];
+const [itemsCollected, setItemsCollected] = useState<Item[]>([
+  { name: 'leaf', amount: 67, img: Grass2 },
+  { name: 'grass', amount: 0 },
+  { name: 'treasure', amount: 0 },
+]);
+
 
   /* ITEMS CONFIG (THE INTERACTIVE IMGS YOU SEE ON SCREEN) */
   const ITEM_CONFIG = [
@@ -91,6 +92,7 @@ const [conditionalQuestionDisplayProps, setConditionalQuestionDisplayProps] = us
     <ConditionalQuestionDisplay
       conditionalQuestionDisplayProps={conditionalQuestionDisplayProps}
       setInteractiveImgComponentVisibility={setInteractiveImgComponentVisibility}
+      state={state}
     />
   </div>
 )}
