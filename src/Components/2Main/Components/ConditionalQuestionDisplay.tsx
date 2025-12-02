@@ -14,7 +14,7 @@ type InteractiveImgProps = {
 
 
 
-function ConditionalQuestionDisplay({ conditionalQuestionDisplayProps, setInteractiveImgComponentVisibility }: InteractiveImgProps) {
+function ConditionalQuestionDisplay({ conditionalQuestionDisplayProps, setInteractiveImgComponentVisibility, dispatch }: InteractiveImgProps) {
   const [feedback, setFeedback] = useState<boolean | string>("Not Yet Answered");
   const [attempts, setAttempts] = useState<number>(0);
   const [maxAttempts, setMaxAttempts] = useState<number>(0);
@@ -52,6 +52,7 @@ function handleAnswer(choice: string) {
     if (choice === conditionalQuestionDisplayProps.answer) {
       setFeedback(true);
       handleFeedback();
+      dispatch({ type: `INCREMENT_${conditionalQuestionDisplayProps.type}` });
     } else if (newAttempts >= maxAttempts && choice !== conditionalQuestionDisplayProps.answer) {
       setFeedback(false);
       handleFeedback();

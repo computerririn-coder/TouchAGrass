@@ -114,7 +114,6 @@ const randomNumber = Math.floor(Math.random() * (maxNumber + 1));
             className="w-10 h-10 absolute"
             style={{ top: `${top}%`, left: `${left}%` }}
             onClick={() => {
-              dispatch({ type: `INCREMENT_${e.name}`, index: i });
               setVisible(prev => [...prev, i]);
 
               switch (e.name) {

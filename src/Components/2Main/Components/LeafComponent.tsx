@@ -1,6 +1,21 @@
-import { useState, useReducer, useUniquePositions, Leaf, Grass, Treasure, Grass2, background, Title, InteractiveImg, Amounts, ConditionalQuestionDisplay, BackgroundVideo, 
-  Leaf2, Treasure2 } from './Imports';
-
+import {
+  useState,
+  useReducer,
+  useUniquePositions,
+  Leaf,
+  Grass,
+  Treasure,
+  Grass2,
+  background,
+  Title,
+  InteractiveImg,
+  Amounts,
+  ConditionalQuestionDisplay,
+  BackgroundVideo,
+  Leaf2,
+  Treasure2
+} from './Imports';
+import { useEffect } from 'react';
 /* TYPES */
 type Item = { name: string; amount: number; img?: string };
 type Action = { type: string; index?: number };
@@ -9,9 +24,20 @@ type Action = { type: string; index?: number };
 function allItemsReducer(state: Item[], action: Action) {
   switch (action.type) {
     case 'INCREMENT_leaf':
-      return state.map(item => item.name === 'leaf' ? { ...item, amount: item.amount + 1 } : item);
-    case 'INCREMENT_GRASS':
-      return state.map(item => item.name === 'grass' ? { ...item, amount: item.amount + 1 } : item);
+      return state.map(item =>
+        item.name === 'leaf' ? { ...item, amount: item.amount + 1 } : item
+      );
+
+    case 'INCREMENT_grass':
+      return state.map(item =>
+        item.name === 'grass' ? { ...item, amount: item.amount + 1 } : item
+      );
+
+    case 'INCREMENT_treasure':
+      return state.map(item =>
+        item.name === 'treasure' ? { ...item, amount: item.amount + 1 } : item
+      );
+
     default:
       return state;
   }
@@ -20,40 +46,70 @@ function allItemsReducer(state: Item[], action: Action) {
 /* COMPONENT */
 function LeafComponent() {
   const [visible, setVisible] = useState<number[]>([]);
-  const [interactiveImgComponentVisibility, setInteractiveImgComponentVisibility] = useState<boolean>(false);
-const [conditionalQuestionDisplayProps, setConditionalQuestionDisplayProps] = useState({
-  type: undefined as undefined | string,
-  img: undefined as undefined | string,
-  question: undefined as undefined | string,
-  answer: undefined as undefined | string,
-  choices: [] as string[] | undefined[],
-});
-
-
-
+  const [interactiveImgComponentVisibility, setInteractiveImgComponentVisibility] =
+    useState<boolean>(false);
+  const [conditionalQuestionDisplayProps, setConditionalQuestionDisplayProps] =
+    useState({
+      type: undefined as undefined | string,
+      img: undefined as undefined | string,
+      question: undefined as undefined | string,
+      answer: undefined as undefined | string,
+      choices: [] as string[] | undefined[],
+    });
 
   /* USEREDUCER STATE */
-const [itemsCollected, setItemsCollected] = useState<Item[]>([
-  { name: 'leaf', amount: 67, img: Grass2 },
-  { name: 'grass', amount: 0 },
-  { name: 'treasure', amount: 0 },
+/* Persistent state for itemsCollected */
+const [itemsCollected, setItemsCollected] = useState<Item[]>(() => {
+  const saved = localStorage.getItem('itemsCollected');
+  return saved
+    ? JSON.parse(saved)
+    : [
+        { name: 'leaf', amount: 67 },
+        { name: 'grass', amount: 0 },
+        { name: 'treasure', amount: 0 },
+      ];
+});
+
+/* Persistent state for count1 */
+const [count1, setCount1] = useState<number>(() => {
+  const saved = localStorage.getItem('count1');
+  return saved ? Number(saved) : 3;
+});
+
+/* Sync itemsCollected to localStorage whenever it changes */
+useEffect(() => {
+  localStorage.setItem('itemsCollected', JSON.stringify(itemsCollected));
+}, [itemsCollected]);
+
+/* Sync count1 to localStorage whenever it changes */
+useEffect(() => {
+  localStorage.setItem('count1', count1.toString());
+}, [count1]);
+
+/* ITEMS CONFIG (dynamic leaf count) */
+const [itemConfig, setItemConfig] = useState([
+  { name: 'leaf', img: Leaf, count: count1 },
+  { name: 'grass', img: Grass, count: 3 },
+  { name: 'treasure', img: Treasure, count: 1 },
 ]);
 
-
-  /* ITEMS CONFIG (THE INTERACTIVE IMGS YOU SEE ON SCREEN) */
-  const ITEM_CONFIG = [
-    { name: 'leaf', img: Leaf, count: 8 },
-    { name: 'grass', img: Grass, count: 3 },
-    { name: 'treasure', img: Treasure, count: 1 },
-  ];
-
-  const allItems = ITEM_CONFIG.flatMap(element =>
-    Array.from({ length: element.count }, () => ({
-      name: element.name,
-      img: element.img,
-      amount: 0
-    }))
+/* Keep itemConfig.count for leaf in sync with count1 */
+useEffect(() => {
+  setItemConfig(prev =>
+    prev.map(item =>
+      item.name === 'leaf' ? { ...item, count: count1 } : item
+    )
   );
+}, [count1]);
+
+/* Generate allItems dynamically */
+const allItems = itemConfig.flatMap(element =>
+  Array.from({ length: element.count }, () => ({
+    name: element.name,
+    img: element.img,
+  }))
+);
+
 
   /* POSITIONS CUSTOM HOOK */
   const positions = useUniquePositions(allItems.length);
@@ -70,7 +126,6 @@ const [itemsCollected, setItemsCollected] = useState<Item[]>([
         <Title />
 
         {/* INTERACTIVE IMG */}
-        
         <InteractiveImg
           allItems={allItems}
           positions={positions}
@@ -80,24 +135,21 @@ const [itemsCollected, setItemsCollected] = useState<Item[]>([
           setConditionalQuestionDisplayProps={setConditionalQuestionDisplayProps}
           setInteractiveImgComponentVisibility={setInteractiveImgComponentVisibility}
         />
-        
 
         {/* Amounts */}
-        <Amounts state={state} />
+        <Amounts state={state} setCount1={setCount1} count1={count1}/>
       </div>
 
       {/* CONDITIONAL QUESTION DISPLAY */}
-{interactiveImgComponentVisibility && (
-  <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[4px] overflow-hidden z-50">
-    <ConditionalQuestionDisplay
-      conditionalQuestionDisplayProps={conditionalQuestionDisplayProps}
-      setInteractiveImgComponentVisibility={setInteractiveImgComponentVisibility}
-      state={state}
-    />
-  </div>
-)}
-
-      
+      {interactiveImgComponentVisibility && (
+        <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[4px] overflow-hidden z-50">
+          <ConditionalQuestionDisplay
+            conditionalQuestionDisplayProps={conditionalQuestionDisplayProps}
+            setInteractiveImgComponentVisibility={setInteractiveImgComponentVisibility}
+            dispatch={dispatch}
+          />
+        </div>
+      )}
     </main>
   );
 }
