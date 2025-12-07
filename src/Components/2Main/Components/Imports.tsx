@@ -15,5 +15,5 @@ export { default as background } from '../../../assets/background.mp4';
 export { default as Title } from './Title';
 export { default as InteractiveImg } from './InteractiveImg';
 export { default as Amounts } from './Amounts';
-export { default as ConditionalQuestionDisplay } from './ConditionalQuestionDisplay';
+export { default as ConditionalQuestionDisplay } from './ConditionalComponents/ConditionalQuestionDisplay';
 export { default as BackgroundVideo } from './BackgroundVideo';

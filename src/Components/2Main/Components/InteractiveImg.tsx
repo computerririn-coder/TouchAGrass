@@ -100,7 +100,7 @@ const randomNumber = Math.floor(Math.random() * (maxNumber + 1));
 
 
   return (
-    <section className="w-full h-[59vh] relative">
+    <section className="w-full h-[58vh] relative">
       {allItems.map((e, i) => {
         if (visible.includes(i)) return null;
 

@@ -1,21 +1,7 @@
-import {
-  useState,
-  useReducer,
-  useUniquePositions,
-  Leaf,
-  Grass,
-  Treasure,
-  Grass2,
-  background,
-  Title,
-  InteractiveImg,
-  Amounts,
-  ConditionalQuestionDisplay,
-  BackgroundVideo,
-  Leaf2,
-  Treasure2
-} from './Imports';
-import { useEffect } from 'react';
+import { useState, useReducer, useEffect } from "react";
+import {useUniquePositions,Leaf,Grass,Treasure,Grass2,background,Title,InteractiveImg,Amounts,ConditionalQuestionDisplay,BackgroundVideo,Leaf2,Treasure2} from "./Imports";
+import Shop from "./ConditionalComponents/Shop";
+
 /* TYPES */
 type Item = { name: string; amount: number; img?: string };
 type Action = { type: string; index?: number };
@@ -23,19 +9,19 @@ type Action = { type: string; index?: number };
 /* REDUCER */
 function allItemsReducer(state: Item[], action: Action) {
   switch (action.type) {
-    case 'INCREMENT_leaf':
+    case "INCREMENT_leaf":
       return state.map(item =>
-        item.name === 'leaf' ? { ...item, amount: item.amount + 1 } : item
+        item.name === "leaf" ? { ...item, amount: item.amount + 1 } : item
       );
 
-    case 'INCREMENT_grass':
+    case "INCREMENT_grass":
       return state.map(item =>
-        item.name === 'grass' ? { ...item, amount: item.amount + 1 } : item
+        item.name === "grass" ? { ...item, amount: item.amount + 1 } : item
       );
 
-    case 'INCREMENT_treasure':
+    case "INCREMENT_treasure":
       return state.map(item =>
-        item.name === 'treasure' ? { ...item, amount: item.amount + 1 } : item
+        item.name === "treasure" ? { ...item, amount: item.amount + 1 } : item
       );
 
     default:
@@ -45,73 +31,47 @@ function allItemsReducer(state: Item[], action: Action) {
 
 /* COMPONENT */
 function LeafComponent() {
+  /* VISIBILITY STATE */
   const [visible, setVisible] = useState<number[]>([]);
-  const [interactiveImgComponentVisibility, setInteractiveImgComponentVisibility] =
-    useState<boolean>(false);
+  
+  const [interactiveImgComponentVisibility, setInteractiveImgComponentVisibility] = useState<boolean>(false);
+  const [ShopVisibility, setShopVisibility] = useState(false);
+  
+
+
+
+  /* CONDITIONAL DISPLAY PROPS */
   const [conditionalQuestionDisplayProps, setConditionalQuestionDisplayProps] =
-    useState({
-      type: undefined as undefined | string,
-      img: undefined as undefined | string,
-      question: undefined as undefined | string,
-      answer: undefined as undefined | string,
-      choices: [] as string[] | undefined[],
-    });
+    useState( { type: undefined as undefined | string, img: undefined as undefined | string, question: undefined as undefined | string, answer: undefined as undefined | string,
+    choices: [] as string[] | undefined[] } );
 
-  /* USEREDUCER STATE */
-/* Persistent state for itemsCollected */
-const [itemsCollected, setItemsCollected] = useState<Item[]>(() => {
-  const saved = localStorage.getItem('itemsCollected');
-  return saved
-    ? JSON.parse(saved)
-    : [
-        { name: 'leaf', amount: 67 },
-        { name: 'grass', amount: 0 },
-        { name: 'treasure', amount: 0 },
-      ];
-});
+  /* PERSISTENT STATE: itemsCollected */
+  const [itemsCollected, setItemsCollected] = useState<Item[]>(() => { const saved = localStorage.getItem("itemsCollected"); return saved ? JSON.parse(saved)
+      : [ { name: "leaf", amount: 10 ,bought: false}, { name: "grass", amount: 10, bought: false}, { name: "treasure", amount: 10, bought: false} ] ;});
 
-/* Persistent state for count1 */
-const [count1, setCount1] = useState<number>(() => {
-  const saved = localStorage.getItem('count1');
-  return saved ? Number(saved) : 3;
-});
+  /* PERSISTENT countImg */
+  const [countImg, setCountImg] = useState<number>(() => { const saved = localStorage.getItem("countImg"); return saved ? Number(saved) : 2 });
 
-/* Sync itemsCollected to localStorage whenever it changes */
-useEffect(() => {
-  localStorage.setItem('itemsCollected', JSON.stringify(itemsCollected));
-}, [itemsCollected]);
+  /* PERSISTENT leaf + treasure counts array */
+  const [leafTreasureCount, setLeafTreasureCount] = useState<number[]>(() => {const saved = localStorage.getItem("leafTreasureCount");return saved ? JSON.parse(saved) : [4, 2];});
 
-/* Sync count1 to localStorage whenever it changes */
-useEffect(() => {
-  localStorage.setItem('count1', count1.toString());
-}, [count1]);
+  /* SYNC: itemsCollected */
+  useEffect(() => {localStorage.setItem("itemsCollected", JSON.stringify(itemsCollected));}, [itemsCollected]);
 
-/* ITEMS CONFIG (dynamic leaf count) */
-const [itemConfig, setItemConfig] = useState([
-  { name: 'leaf', img: Leaf, count: count1 },
-  { name: 'grass', img: Grass, count: 3 },
-  { name: 'treasure', img: Treasure, count: 1 },
-]);
+  /* SYNC: countImg */
+  useEffect(() => {localStorage.setItem("countImg", countImg.toString());}, [countImg]);
 
-/* Keep itemConfig.count for leaf in sync with count1 */
-useEffect(() => {
-  setItemConfig(prev =>
-    prev.map(item =>
-      item.name === 'leaf' ? { ...item, count: count1 } : item
-    )
-  );
-}, [count1]);
+  /* SYNC: leafTreasureCount */
+  useEffect(() => {localStorage.setItem("leafTreasureCount", JSON.stringify(leafTreasureCount));}, [leafTreasureCount]);
 
-/* Generate allItems dynamically */
-const allItems = itemConfig.flatMap(element =>
-  Array.from({ length: element.count }, () => ({
-    name: element.name,
-    img: element.img,
-  }))
-);
+  /* ITEM CONFIG */
+  const [itemConfig] = useState([ { name: "leaf", img: Leaf, count: countImg }, { name: "grass", img: Grass, count: leafTreasureCount[0] },
+    { name: "treasure", img: Treasure, count: leafTreasureCount[1] } ]);
 
+  /* BUILD allItems */
+  const allItems = itemConfig.flatMap(element =>Array.from({ length: element.count }, () => ({name: element.name, img: element.img }))  );
 
-  /* POSITIONS CUSTOM HOOK */
+  /* UNIQUE POSITIONS */
   const positions = useUniquePositions(allItems.length);
 
   /* REDUCER STATE */
@@ -119,37 +79,30 @@ const allItems = itemConfig.flatMap(element =>
 
   return (
     <main className="relative w-full overflow-visible">
-      {/* BACKGROUND VIDEO */}
+
       <BackgroundVideo background={background} />
 
       <div className="relative z-10">
         <Title />
 
-        {/* INTERACTIVE IMG */}
-        <InteractiveImg
-          allItems={allItems}
-          positions={positions}
-          visible={visible}
-          setVisible={setVisible}
-          dispatch={dispatch}
-          setConditionalQuestionDisplayProps={setConditionalQuestionDisplayProps}
-          setInteractiveImgComponentVisibility={setInteractiveImgComponentVisibility}
+        <InteractiveImg allItems={allItems} positions={positions} visible={visible} setVisible={setVisible} dispatch={dispatch} 
+                        setConditionalQuestionDisplayProps={setConditionalQuestionDisplayProps} setInteractiveImgComponentVisibility={setInteractiveImgComponentVisibility}
         />
 
-        {/* Amounts */}
-        <Amounts state={state} setCount1={setCount1} count1={count1}/>
+        <Amounts state={state} itemsCollected={itemsCollected} countImg={countImg} setCountImg={setCountImg} setLeafTreasureCount={setLeafTreasureCount}
+                 setShopVisibility={setShopVisibility}/>
       </div>
 
-      {/* CONDITIONAL QUESTION DISPLAY */}
       {interactiveImgComponentVisibility && (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[4px] overflow-hidden z-50">
-          <ConditionalQuestionDisplay
-            conditionalQuestionDisplayProps={conditionalQuestionDisplayProps}
-            setInteractiveImgComponentVisibility={setInteractiveImgComponentVisibility}
-            dispatch={dispatch}
-          />
+          <ConditionalQuestionDisplay conditionalQuestionDisplayProps={conditionalQuestionDisplayProps} setInteractiveImgComponentVisibility={setInteractiveImgComponentVisibility}
+                                      dispatch={dispatch}/>
         </div>
       )}
+{ShopVisibility && (
+      <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[0px] overflow-hidden z-50">
+<Shop itemsCollected={itemsCollected} setItemsCollected={setItemsCollected} setShopVisibility={setShopVisibility}/>
+      </div>)}
     </main>
   );
 }

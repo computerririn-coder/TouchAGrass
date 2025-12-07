@@ -1,20 +1,27 @@
 import Marquee from "react-fast-marquee";
 
-function Instructioncarousel() {
-    return (             
+function InstructionCarousel() {
+  // Define your steps in an array for clarity
+  const gameSteps = [
+    "1️⃣ Click on any image",
+    "2️⃣ Answer the question",
+    "3️⃣ If correct, your points will increase",
+    "4️⃣ Use points to buy in the shop",
+    "5️⃣ If out of images, click 'Spawn More' or 'Spawn More Special Type' in the top-left corner",
+    "6️⃣ Unlock achievements by completing tasks"
+  ];
+
+  return (
     <section className="w-full h-[5vh] bg-yellow-400 flex items-center justify-center">
-         <Marquee gradient={false} speed={50} loop={0}>
-          <span className="mx-4">0 - placeholder:1</span>
-          <span className="mx-4">1 - placeholder:2</span>
-          <span className="mx-4">2 - placeholder:3</span>
-          <span className="mx-4">3 - placeholder:5</span>
-          <span className="mx-4">4 - placeholder:5</span>
-          <span className="mx-4">5 - placeholder:6</span>
-          <span className="mx-4">6 - placeholder:6</span>
-          <span className="mx-4">7 - placeholder:6</span>
-        </Marquee> 
-     </section>
-     );
+      <Marquee gradient={false} speed={50} loop={0}>
+        {gameSteps.map((step, index) => (
+          <span key={index} className="mx-6 font-semibold text-black">
+            {step}
+          </span>
+        ))}
+      </Marquee>
+    </section>
+  );
 }
 
-export default Instructioncarousel;
+export default InstructionCarousel;

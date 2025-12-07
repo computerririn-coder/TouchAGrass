@@ -1,37 +1,42 @@
 import Logo from "../../assets/Logo.png";
 import NavBg from "../../assets/NavBarBackground.jpg";
 
-
-function NavBar() {
+function NavBar({setComponentVisibility}) {
   return (
     <nav
-      className="w-full h-12 bg-cover bg-center"
+      className="w-full h-14 bg-cover bg-center shadow-md"
       style={{ backgroundImage: `url(${NavBg})` }}
     >
-      <ul className="flex items-center gap-6 p-2 w-full text-xs text-white">
+      <ul className="flex items-center gap-4 sm:gap-8 px-2 sm:px-4 w-full text-xs sm:text-sm text-white h-full">
 
-        <li className="flex items-center flex-shrink">
-          <img src={Logo} alt="Logo" className="w-8 h-8" />
+        {/* Logo */}
+        <li className="flex items-center flex-shrink-0">
+          <img src={Logo} alt="Logo" className="w-8 h-8 sm:w-9 sm:h-9 drop-shadow-lg" />
         </li>
 
-        <li className="bg-green-600 h-6 px-3 rounded-2xl flex items-center justify-center flex-shrink">
-          <span className="text-white font-medium tracking-wide text-xs">
+        {/* How To Use */}
+        <li className="h-7 sm:h-8 px-2 sm:px-4 rounded-full bg-green-600/90 backdrop-blur-sm flex items-center justify-center transition-colors hover:bg-green-700 min-w-0 border-2 [border-color:#C0C0C0]">
+          <span className="font-medium tracking-wide whitespace-nowrap truncate" onClick={() => setComponentVisibility(prev => ({...prev, instructionsVisibility: true,}))}>
             How To Use?
           </span>
         </li>
 
-        <li className="flex gap-3 mx-auto flex-shrink">
-          <span className="bg-green-700 h-6 px-4 rounded-2xl flex items-center justify-center flex-shrink text-green-100 font-medium tracking-wide text-xs cursor-pointer">
+        {/* Center Section */}
+        <li className="flex gap-2 sm:gap-4 mx-auto flex-shrink min-w-0">
+
+          <span className="h-7 sm:h-8 px-3 sm:px-5 rounded-full bg-green-700/90 backdrop-blur-sm flex items-center justify-center text-green-50 font-medium tracking-wide cursor-pointer transition-colors hover:bg-green-800 whitespace-nowrap truncate min-w-0 border-2 [border-color:#C0C0C0]">
             Items Storage
           </span>
 
-          <span className="bg-blue-400 h-6 px-3 rounded-2xl flex items-center justify-center flex-shrink text-white font-medium tracking-wide text-xs cursor-pointer">
+          <span className="h-7 sm:h-8 px-3 sm:px-4 rounded-full bg-blue-500/90 backdrop-blur-sm flex items-center justify-center text-white font-medium tracking-wide cursor-pointer transition-colors hover:bg-blue-600 whitespace-nowrap truncate min-w-0 border-2 [border-color:#C0C0C0]">
             Achievements
           </span>
+
         </li>
 
-        <li className="flex justify-center items-center w-16 h-8 bg-green-400 rounded-[5px] border border-gray-600 flex-shrink">
-          <span className="text-black font-semibold tracking-wide text-xs">
+        {/* Log In */}
+        <li className="w-16 sm:w-20 h-7 sm:h-8 bg-green-400/90 border-2 [border-color:#C0C0C0] rounded-md flex items-center justify-center shadow-sm transition-colors hover:bg-green-300 min-w-0" onClick={() => setComponentVisibility((prev: any) => ({...prev, logInVisibility: true,}))}>
+          <span className="text-black font-semibold tracking-wide whitespace-nowrap truncate">
             Log In
           </span>
         </li>
