@@ -41,7 +41,6 @@
 .itemCard button {
   height: 25%;
   width: 100%;
-  background: linear-gradient(to bottom right, #10b981, #14b8a6); /* gradient button */
   color: #ffffff;
   display: flex;
   justify-content: center;

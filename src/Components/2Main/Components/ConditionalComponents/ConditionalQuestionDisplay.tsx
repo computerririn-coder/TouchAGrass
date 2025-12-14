@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Countdown from "react-countdown";
 
 type conditionalQuestionDisplayPropsTS = {
@@ -24,6 +24,8 @@ function ConditionalQuestionDisplay({
   const [attempts, setAttempts] = useState<number>(0);
   const [maxAttempts, setMaxAttempts] = useState<number>(0);
 
+  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+
   const isDisabled = attempts >= maxAttempts || feedback === true;
 
   useEffect(() => {
@@ -43,11 +45,12 @@ function ConditionalQuestionDisplay({
   }, [conditionalQuestionDisplayProps.type]);
 
   function handleFeedback() {
-    setTimeout(() => {
-      if(setInteractiveImgComponentVisibility){
-        setInteractiveImgComponentVisibility(false);
-      }
-    }, 5000);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
+
+    timeoutRef.current = setTimeout(() => {
+      setInteractiveImgComponentVisibility(false);
+      timeoutRef.current = null;
+    }, 3000);
   }
 
   function handleAnswer(choice: string) {
@@ -69,29 +72,25 @@ function ConditionalQuestionDisplay({
     });
   }
 
-  const countdown = isDisabled ? Date.now() + 5000 : null;
+  useEffect(() => {
+    return () => {
+      if (timeoutRef.current) clearTimeout(timeoutRef.current);
+    };
+  }, []);
+
+  
+  const countdown = isDisabled ? Date.now() + 3000 : null;
 
   return (
     <section className="relative z-20 mx-auto">
-      <div
-        className="
-          bg-gradient-to-br from-emerald-200 via-emerald-300 to-green-400 
-          mx-auto rounded-2xl shadow-2xl overflow-hidden 
-          border border-amber-600 flex flex-col items-center justify-start 
-          min-h-80 w-[80%] md:w-full
-        "
-      >
+      <div className="bg-gradient-to-br from-emerald-200 via-emerald-300 to-green-400 mx-auto rounded-2xl shadow-2xl overflow-hidden border border-amber-600 flex flex-col items-center justify-start min-h-80 w-[80%] md:w-full">
+        
         <button
-          onClick={() => setInteractiveImgComponentVisibility(false)}
-          className="
-            absolute right-[-1rem] top-[-1rem]
-            h-10 w-10 flex items-center justify-center
-            rounded-full bg-gradient-to-br from-green-300 to-green-500
-            border border-amber-600 shadow-md
-            text-red-800 text-2xl font-bold
-            hover:scale-110 hover:shadow-xl hover:bg-green-400
-            transition-all
-          "
+          onClick={() => {
+            setInteractiveImgComponentVisibility(false);
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+          }}
+          className="absolute right-[-1rem] top-[-1rem] h-10 w-10 flex items-center justify-center rounded-full bg-gradient-to-br from-green-300 to-green-500 border border-amber-600 shadow-md text-red-800 text-2xl font-bold hover:scale-110 hover:shadow-xl hover:bg-green-400 transition-all"
         >
           ×
         </button>
@@ -109,21 +108,19 @@ function ConditionalQuestionDisplay({
 
         {/* DIFFICULTY + QUESTION */}
         <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4 pb-5 w-full px-4">
-          {/* left side */}
           <div className="flex flex-col gap-2 items-start md:items-center min-w-fit">
             <span className="text-xs md:text-sm font-semibold bg-blue-900 text-white px-3 py-1 rounded-full shadow-md w-full">
-              Difficulty: {conditionalQuestionDisplayProps.type}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              Difficulty: {conditionalQuestionDisplayProps.type}
             </span>
             <span className="text-xs md:text-sm font-semibold bg-blue-900 text-white px-3 py-1 rounded-full shadow-md min-w-full">
               Status: {feedback ? "Correct" : "Wrong"}
             </span>
           </div>
 
-          {/* right side */}
           <div className="flex flex-row justify-between items-center gap-4 p-4 bg-amber-400 rounded-2xl shadow-md flex-1">
             {isDisabled ? (
               <p className="text-base md:text-lg font-semibold w-95">
-                {feedback ? "Correct" : "Wrong"}, This page will be nuked in{" "}
+                {feedback ? "Correct" : "Wrong"}, This page will close in{" "}
                 <Countdown
                   date={countdown as number}
                   renderer={({ total }) => {
@@ -149,17 +146,11 @@ function ConditionalQuestionDisplay({
           {conditionalQuestionDisplayProps.choices.map((choice, index) => (
             <p
               key={index}
-              className={`
-                w-[80%] flex justify-center items-center 
-                bg-white/70 text-gray-800 backdrop-blur-sm 
-                border border-gray-300 rounded-xl 
-                py-3 px-4 shadow-sm 
-                transition duration-200 ease-in-out 
-                ${isDisabled
+              className={`w-[80%] flex justify-center items-center bg-white/70 text-gray-800 backdrop-blur-sm border border-gray-300 rounded-xl py-3 px-4 shadow-sm transition duration-200 ease-in-out ${
+                isDisabled
                   ? "opacity-50 cursor-not-allowed"
-                  : "hover:bg-white/95 hover:translate-y-[-3px] hover:scale-105 hover:shadow-xl hover:border-green-500"}
-                font-semibold text-center
-              `}
+                  : "hover:bg-white/95 hover:translate-y-[-3px] hover:scale-105 hover:shadow-xl hover:border-green-500"
+              } font-semibold text-center`}
               onClick={() => !isDisabled && handleAnswer(choice)}
             >
               {choice}

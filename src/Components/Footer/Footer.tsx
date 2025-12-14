@@ -1,6 +1,6 @@
 function Footer() {
   return (
-    <footer>
+    <footer className="bg-[#242424]">
       <ul className="w-full flex flex-col gap-3 text-sm  text-white p-4 justify-center items-center">
         
         <li className="flex gap-4 text-green-500 gap-10">
