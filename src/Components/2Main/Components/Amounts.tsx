@@ -19,8 +19,8 @@ function Amounts({
 }: AmountsProps) {
   return (
     <section
-      className="w-full min-h-[10vh] flex flex-col justify-center px-4 py-3"
-      style={{ backgroundImage: `url(${NavBg})` }}
+      className="w-full min-h-[10vh] flex flex-col justify-center px-4 py-3 bg-gradient-to-b   to-blue-700 from-green-600"
+      
     >
       <div className="flex flex-col md:flex-row w-full items-center md:justify-between gap-4">
 

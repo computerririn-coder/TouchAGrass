@@ -149,15 +149,7 @@ function Shop({
                     setItemsCollected={setItemsCollected}
                     setItemStorage={setItemStorage}
                 />
-                 {itemStorage.map((e, i) => (
-              <div
-                key={i}
-                className="w-24 h-24 bg-gray-800 border-2 border-white rounded-lg flex flex-col items-center justify-center shadow-md"
-              >
-                <p className="text-white font-semibold text-sm">Type: {e.name}</p>
-                <p className="text-yellow-300 font-bold text-sm">Price: {e.price}</p>
-              </div>
-            ))}
+
             </section>
             
         </div>

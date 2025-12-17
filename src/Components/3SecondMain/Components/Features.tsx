@@ -37,7 +37,7 @@ function Features() {
         />
         <FeatureCard 
           imageSrc={Grass} 
-          title="Gives More Luck In Your Life" 
+          title="Gives More Luck" 
           description="Magically increases your luck in life in ways you never expected."
         />
       </div>

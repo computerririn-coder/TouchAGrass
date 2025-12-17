@@ -7,17 +7,23 @@ import LogIn from './Components/2Main/Components/ConditionalComponents/LogIn'
 import Footer from './Components/Footer/Footer'
 import Instructioncarousel from './Components/2Main/Components/InstructionCarousel'
 import { useState, useEffect } from 'react'
-import Test from './Components/2Main/Components/Test'
 import ItemStorage from './Components/2Main/Components/ConditionalComponents/ItemStorage'
 import Achievements from './Components/2Main/Components/ConditionalComponents/Achievements'
+import Test from './Components/2Main/Components/Test'
+import { BrowserRouter,Routes,Route } from 'react-router-dom'
+import ErrorMessage from './Components/2Main/Components/ConditionalComponents/ErrorMessage'
+import { questions }   from "./assets/questionsForInterActiveImg";
+
 type componentVisibilityType = {
-    interactiveImgComponentVisibility: boolean,
+  interactiveImgComponentVisibility: boolean,
   ShopVisibility:boolean,
   instructionsVisibility: boolean,
   logInVisibility: boolean
   itemStorageVisibility: boolean,
   achievementsVisibility: boolean, 
 }
+
+
 
 function App() {
   const [componentVisibility, setComponentVisibility] = useState<componentVisibilityType>({
@@ -26,10 +32,10 @@ function App() {
     instructionsVisibility: false,
     logInVisibility: false,
     itemStorageVisibility: false,
-    achievementsVisibility: false,
+    achievementsVisibility: true,
   });
 
-  const [itemStorage, setItemStorage] = useState<{ name: string; price: number; type?: string }[]>(() => {
+  const [itemStorage, setItemStorage] = useState<{ name: string; price: number | string; type?: string }[]>(() => {
     const saved = localStorage.getItem("itemStorage");
     return saved ? JSON.parse(saved) : [{ name: "Sample", price: "Sample" }];
   });
@@ -49,8 +55,20 @@ useEffect(() => {
   toggleBodyScroll();
 }, [componentVisibility]);
 
+/* For Achievements */
+  const [achievement, setAchievement] = useState(questions);
+/*Entered the website */
+  useEffect(() => {
+      setAchievement((prev) =>
+    prev.map((item, index) =>
+      index === 0 ? { ...item, status: true } : item
+    )
+  );
+  }, []);
 
   return (
+  <Routes>
+     <Route path="/" element={
     <>
       <NavBar setComponentVisibility={setComponentVisibility} />
       <Main itemStorage={itemStorage} setItemStorage={setItemStorage} />
@@ -69,12 +87,15 @@ useEffect(() => {
         <ItemStorage itemStorage={itemStorage} setComponentVisibility={setComponentVisibility} />
       )}
       {componentVisibility.achievementsVisibility && (
-        <Achievements setComponentVisibility={setComponentVisibility}/>
+        <Achievements itemStorage={itemStorage} achievement={achievement} setComponentVisibility={setComponentVisibility}/>
       )}
-      
     </>
+    }/>
+    <Route path='/ErrorMessage' element={<ErrorMessage/>}/>
+    </Routes>
   );
 }
 
 
 export default App
+

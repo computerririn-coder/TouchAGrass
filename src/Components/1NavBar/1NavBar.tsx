@@ -1,11 +1,12 @@
 import Logo from "../../assets/Logo.png";
 import NavBg from "../../assets/NavBarBackground.jpg";
+import type ItemStorage from "../2Main/Components/ConditionalComponents/ItemStorage";
 
 function NavBar({ setComponentVisibility }) {
   return (
     <nav
-      className="w-full h-14 bg-cover bg-center shadow-md"
-      style={{ backgroundImage: `url(${NavBg})` }}
+      className="w-full h-14 bg-cover bg-center shadow-md bg-gradient-to-b   from-blue-700 to-green-600"
+      
     >
       <ul className="flex items-center gap-4 sm:gap-8 px-2 sm:px-4 w-full text-xs sm:text-sm text-white h-full">
 
@@ -37,7 +38,7 @@ function NavBar({ setComponentVisibility }) {
           cursor-pointer transition-colors hover:bg-green-800 whitespace-nowrap truncate min-w-0 border-2 [border-color:#C0C0C0]"
           onClick={() => setComponentVisibility((prev) => ({
   ...prev,
-  achievementsVisibility: true,
+  itemStorageVisibility: true,
 }))}>
             Items Storage
           </span>

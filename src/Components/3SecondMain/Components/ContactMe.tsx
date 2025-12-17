@@ -1,4 +1,6 @@
 import { Gamepad2 } from "lucide-react";
+import { animateScroll as scroll } from "react-scroll";
+import { motion } from "framer-motion";
 import styles from "./This.module.css";
 
 function ContactMe() {
@@ -13,17 +15,19 @@ function ContactMe() {
       <h3 className="text-lg text-slate-900 max-w-xl">
         Bored? Waiting for someone? Pass the time with this fun, interactive website.
       </h3>
-<button
-  className={`px-6 py-3 rounded-full bg-amber-300 text-slate-900 font-semibold flex items-center gap-2 
-  transition-transform duration-300 ease-out
-  hover:-translate-y-1 
-  hover:[box-shadow:0_10px_18px_-6px_rgba(251,191,36,0.9),-6px_0_12px_-6px_rgba(251,191,36,0.45),6px_0_12px_-6px_rgba(251,191,36,0.45)]
-  ${styles.orbitron}`}
->
-  <Gamepad2 className="w-5 h-5" />
-  Start having fun now
-</button>
 
+      <motion.button
+        onClick={() => scroll.scrollToTop({ duration: 800, smooth: "easeInOutQuart" })}
+        whileHover={{
+          y: -4,
+          boxShadow: "0 10px 18px -6px rgba(251,191,36,0.9), -6px 0 12px -6px rgba(251,191,36,0.45), 6px 0 12px -6px rgba(251,191,36,0.45)"
+        }}
+        transition={{ type: "spring", stiffness: 300, damping: 20 }}
+        className={`px-6 py-3 rounded-full bg-amber-300 text-slate-900 font-semibold flex items-center gap-2 ${styles.orbitron}`}
+      >
+        <Gamepad2 className="w-5 h-5" />
+        Start having fun now
+      </motion.button>
 
     </section>
   );

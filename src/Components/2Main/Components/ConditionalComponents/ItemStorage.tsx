@@ -1,9 +1,10 @@
 import React from "react";
 
-type PurchasedItem = { name: string; price: number };
+type PurchasedItem = { name: string; price: number | string;  type?: string;};
 
 type ItemStorageProps = {
   itemStorage: PurchasedItem[];
+  componentVisibility: boolean;
   setComponentVisibility: React.Dispatch<React.SetStateAction<any>>;
 };
 

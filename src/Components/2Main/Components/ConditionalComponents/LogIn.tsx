@@ -26,7 +26,7 @@ function LogIn({ componentVisibility, setComponentVisibility }: any) {
           : "opacity-0 translate-y-[-5rem]"
       }`}
     >
-      <div className="w-full max-w-md bg-gray-900 border border-gray-700 rounded-xl shadow-xl p-8 relative">
+      <div className="w-full max-w-md bg-gradient-to-b from-blue-500 to-green-400 border border-gray-700 rounded-xl shadow-xl p-8 relative">
         <button
           onClick={handleClose}
           className="
@@ -65,13 +65,13 @@ function LogIn({ componentVisibility, setComponentVisibility }: any) {
           </button>
         </div>
 
-        <p className="mt-6 text-xs text-center text-gray-400">
+        <p className="mt-6 text-xs text-center text-gray-900">
           By logging in, you agree to our{" "}
-          <a href="#" className="underline text-white hover:text-gray-300">
+          <a href="#" className="underline text-blue-600 hover:text-gray-300">
             Terms of Service
           </a>{" "}
           and{" "}
-          <a href="#" className="underline text-white hover:text-gray-300">
+          <a href="#" className="underline text-blue-600 hover:text-gray-300">
             Privacy Policy
           </a>.
         </p>
