@@ -120,7 +120,7 @@ function ConditionalQuestionDisplay({
           <div className="flex flex-row justify-between items-center gap-4 p-4 bg-amber-400 rounded-2xl shadow-md flex-1">
             {isDisabled ? (
               <p className="text-base md:text-lg font-semibold w-95">
-                {feedback ? "Correct" : "Wrong"}, This page will close in{" "}
+                {feedback ? "Correct" : "Wrong"}, This page will be nuked in{" "}
                 <Countdown
                   date={countdown as number}
                   renderer={({ total }) => {
