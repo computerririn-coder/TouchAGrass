@@ -1,52 +1,47 @@
-import { useState, useReducer, useEffect } from "react";
+import { useState, useEffect } from "react";
 import {
   useUniquePositions,
   Leaf,
   Grass,
   Treasure,
-  Grass2,
   background,
   Title,
   InteractiveImg,
   Amounts,
   ConditionalQuestionDisplay,
   BackgroundVideo,
-  Leaf2,
-  Treasure2
 } from "./Imports";
 import Shop from "./ConditionalComponents/Shop";
 
 /* TYPES */
 type Item = { name: string; amount: number; img?: string; bought?: boolean };
-type Action = { type: string; index?: number };
-
-/* REDUCER */
-function allItemsReducer(state: Item[], action: Action) {
-  switch (action.type) {
-    case "INCREMENT_leaf":
-      return state.map(item =>
-        item.name === "leaf" ? { ...item, amount: item.amount + 1 } : item
-      );
-    case "INCREMENT_grass":
-      return state.map(item =>
-        item.name === "grass" ? { ...item, amount: item.amount + 1 } : item
-      );
-    case "INCREMENT_treasure":
-      return state.map(item =>
-        item.name === "treasure" ? { ...item, amount: item.amount + 1 } : item
-      );
-    default:
-      return state;
-  }
-}
 
 /* COMPONENT */
 interface LeafComponentProps {
   itemStorage: Item[];
   setItemStorage: React.Dispatch<React.SetStateAction<Item[]>>;
+  itemsCollected: Item[];
+  setItemsCollected: React.Dispatch<React.SetStateAction<Item[]>>;
+  countImg: number;
+  setCountImg: React.Dispatch<React.SetStateAction<number>>;
+  leafTreasureCount: number[];
+  setLeafTreasureCount: React.Dispatch<React.SetStateAction<number[]>>;
+  dispatch: React.Dispatch<any>;
+  state: Item[];
 }
 
-function LeafComponent({ itemStorage, setItemStorage }: LeafComponentProps) {
+function LeafComponent({ 
+  itemStorage, 
+  setItemStorage,
+  itemsCollected,
+  setItemsCollected,
+  countImg,
+  setCountImg,
+  leafTreasureCount,
+  setLeafTreasureCount,
+  dispatch,
+  state
+}: LeafComponentProps) {
   /* VISIBILITY STATE */
   const [visible, setVisible] = useState<number[]>([]);
   const [interactiveImgComponentVisibility, setInteractiveImgComponentVisibility] =
@@ -63,67 +58,14 @@ function LeafComponent({ itemStorage, setItemStorage }: LeafComponentProps) {
       choices: [] as string[] | undefined[]
     });
 
-  /* PERSISTENT STATE: itemsCollected */
-  const [itemsCollected, setItemsCollected] = useState<Item[]>(() => {
-    const saved = localStorage.getItem("itemsCollected");
-    try {
-      return saved
-        ? JSON.parse(saved)
-        : [
-            { name: "leaf", amount: 10, bought: false },
-            { name: "grass", amount: 10, bought: false },
-            { name: "treasure", amount: 10, bought: false }
-          ];
-    } catch {
-      return [
-        { name: "leaf", amount: 10, bought: false },
-        { name: "grass", amount: 10, bought: false },
-        { name: "treasure", amount: 10, bought: false }
-      ];
-    }
-  });
-
-  /* PERSISTENT countImg */
-  const [countImg, setCountImg] = useState<number>(() => {
-    const saved = localStorage.getItem("countImg");
-    const n = Number(saved);
-    return !isNaN(n) ? n : 2;
-  });
-
-  /* PERSISTENT leaf + treasure counts array */
-  const [leafTreasureCount, setLeafTreasureCount] = useState<number[]>(() => {
-    const saved = localStorage.getItem("leafTreasureCount");
-    try {
-      const parsed = saved ? JSON.parse(saved) : [4, 2];
-      return Array.isArray(parsed) && parsed.length >= 2 ? parsed : [4, 2];
-    } catch {
-      return [4, 2];
-    }
-  });
-
-  /* SYNC: itemsCollected */
-  useEffect(() => {
-    localStorage.setItem("itemsCollected", JSON.stringify(itemsCollected));
-  }, [itemsCollected]);
-
-  /* SYNC: countImg */
-  useEffect(() => {
-    localStorage.setItem("countImg", countImg.toString());
-  }, [countImg]);
-
-  /* SYNC: leafTreasureCount */
-  useEffect(() => {
-    localStorage.setItem("leafTreasureCount", JSON.stringify(leafTreasureCount));
-  }, [leafTreasureCount]);
-
-  /* ITEM CONFIG */
+  /* "Spawn special" btn */
   const [itemConfig] = useState([
     { name: "leaf", img: Leaf, count: countImg },
     { name: "grass", img: Grass, count: leafTreasureCount[0] ?? 0 },
     { name: "treasure", img: Treasure, count: leafTreasureCount[1] ?? 0 }
   ]);
 
-  /* BUILD allItems */
+  /* IMG */
   const allItems = itemConfig.flatMap(element =>
     Array.from({ length: element.count }, () => ({
       name: element.name,
@@ -133,12 +75,6 @@ function LeafComponent({ itemStorage, setItemStorage }: LeafComponentProps) {
 
   /* UNIQUE POSITIONS */
   const positions = useUniquePositions(allItems.length);
-
-  /* REDUCER STATE */
-  const [state, dispatch] = useReducer(allItemsReducer, itemsCollected);
-  useEffect(() => {
-    setItemsCollected(state);
-  }, [state]);
 
   return (
     <main className="relative w-full overflow-visible">

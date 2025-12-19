@@ -1,21 +1,14 @@
-import React from "react";
+import type { ComponentVisibility, ItemStorageProps } from "../Typescript/TypescriptCompilationtypes";
 
-type PurchasedItem = { name: string; price: number | string;  type?: string;};
 
-type ItemStorageProps = {
-  itemStorage: PurchasedItem[];
-  componentVisibility: boolean;
-  setComponentVisibility: React.Dispatch<React.SetStateAction<any>>;
-};
-
-function ItemStorage({ itemStorage, setComponentVisibility }: ItemStorageProps) {
+function ItemStorageComponent({ itemStorage, setComponentVisibility }: ItemStorageProps) {
   return (
     <section className="absolute top-[46%] left-[50%] -translate-x-[50%] -translate-y-[50%] z-20 w-screen h-screen flex items-center justify-center">
       <div className="relative w-[80%] h-[75%]">
         <button
-          className="absolute top-[-1rem] right-[-1rem] z-50 text-black text-2xl font-light hover:opacity-90 rounded-full bg-gradient-to-br from-green-400 to-yellow-300 h-10 w-10 flex items-center justify-center shadow-md"
+          className="absolute top-4 right-4 z-50 text-black text-2xl font-light hover:opacity-90 rounded-full bg-linear-to-br from-green-400 to-yellow-300 h-10 w-10 flex items-center justify-center shadow-md"
           onClick={() =>
-            setComponentVisibility((prev) => ({
+            setComponentVisibility((prev: ComponentVisibility) => ({
               ...prev,
               itemStorageVisibility: false,
             }))
@@ -24,7 +17,7 @@ function ItemStorage({ itemStorage, setComponentVisibility }: ItemStorageProps) 
           X
         </button>
 
-        <div className="w-full h-full bg-black border-2 border-white rounded-lg shadow-lg p-4 bg-gradient-to-br from-green-700 via-emerald-600 to-yellow-600 overflow-auto">
+        <div className="w-full h-full bg-black border-2 border-white rounded-lg shadow-lg p-4 bg-linear-to-br from-green-700 via-emerald-600 to-yellow-600 overflow-auto">
           <div className="flex flex-row flex-wrap gap-4">
             {itemStorage.map((e, i) => (
               <div
@@ -42,4 +35,4 @@ function ItemStorage({ itemStorage, setComponentVisibility }: ItemStorageProps) 
   );
 }
 
-export default ItemStorage;
+export default ItemStorageComponent;

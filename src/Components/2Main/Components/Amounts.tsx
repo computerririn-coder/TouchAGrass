@@ -6,7 +6,6 @@ interface AmountsProps {
   setCountImg: React.Dispatch<React.SetStateAction<number>>;
   setLeafTreasureCount: React.Dispatch<React.SetStateAction<number[]>>;
   itemsCollected: { name: string; amount: number }[];
-  setShopVisibility: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 function Amounts({
@@ -15,15 +14,13 @@ function Amounts({
   itemsCollected,
   setCountImg,
   setLeafTreasureCount,
-  setShopVisibility
+  setComponentVisibility,
 }: AmountsProps) {
   return (
     <section
-      className="w-full min-h-[10vh] flex flex-col justify-center px-4 py-3 bg-gradient-to-b   to-blue-700 from-green-600"
-      
+      className="w-full h-[20vh] xl:h-[10vh] flex flex-col justify-center px-4 py-3 bg-gradient-to-b to-blue-700 from-green-600"
     >
       <div className="flex flex-col md:flex-row w-full items-center md:justify-between gap-4">
-
         {/* Item counts */}
         <div className="flex flex-wrap gap-4">
           {itemsCollected.map((item, index) => (
@@ -39,7 +36,6 @@ function Amounts({
 
         {/* Buttons */}
         <div className="flex gap-4 mt-2 md:mt-0">
-
           <button
             className="px-4 py-2 font-semibold rounded-lg shadow bg-gradient-to-r from-red-500 to-red-700 text-white border-red-600 border hover:border-gray-400"
             onClick={() => {
@@ -80,11 +76,17 @@ function Amounts({
 
           <button
             className="px-4 py-2 font-semibold rounded-lg shadow bg-gradient-to-r from-green-500 to-green-700 text-white border-green-600 border hover:border-gray-400"
-            onClick={() => setShopVisibility(true)}
+            onClick={() =>
+              setComponentVisibility(prev => {
+                return {
+                  ...prev,
+                  shopVisibility: true,
+                };
+              })
+            }
           >
             Shop🛒
           </button>
-
         </div>
       </div>
     </section>

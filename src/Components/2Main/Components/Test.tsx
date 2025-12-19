@@ -1,40 +1,43 @@
-// Test.jsx
-import React, { useState } from "react";
-import { motion } from "framer-motion";
-
-const navItems = [
-  { name: "Home", link: "/" },
-  { name: "Shop", link: "/shop" },
-  { name: "About", link: "/about" },
-  { name: "Contact", link: "/contact" },
-];
+import { useState } from "react";
 
 const Test = () => {
-  const [active, setActive] = useState("Home");
+  const [open, setOpen] = useState(false);
 
   return (
-    <nav className="relative flex gap-6 p-4 border-b bg-gray-900 text-white">
-      {navItems.map((item) => (
-        <div key={item.name} className="relative">
-          <button
-            onClick={() => setActive(item.name)}
-            className={`px-3 py-1 font-medium ${
-              active === item.name ? "text-yellow-400" : "text-white"
-            }`}
-          >
-            {item.name}
-          </button>
+    <nav className="relative p-4 border-b bg-gray-900 text-white">
+      <div className="flex items-center justify-between">
+        {/* Logo */}
+        <span className="text-lg font-semibold">Logo</span>
 
-          {/* Animated underline */}
-          {active === item.name && (
-            <motion.div
-              layoutId="underline"
-              className="absolute bottom-0 left-0 w-full h-[2px] bg-yellow-400"
-              transition={{ type: "spring", stiffness: 300, damping: 30 }}
-            />
-          )}
+        {/* Desktop links */}
+        <div className="hidden sm:flex gap-6">
+          <span>Home</span>
+          <span>About</span>
+          <span>Contact</span>
         </div>
-      ))}
+
+        {/* Hamburger */}
+        <button
+          className="sm:hidden"
+          onClick={() => setOpen(prev => !prev)}
+          aria-label="Toggle menu"
+        >
+          <div className="space-y-1">
+            <span className="block w-6 h-0.5 bg-white" />
+            <span className="block w-6 h-0.5 bg-white" />
+            <span className="block w-6 h-0.5 bg-white" />
+          </div>
+        </button>
+      </div>
+
+      {/* Mobile menu (overlay, does NOT resize navbar) */}
+      {open && (
+        <div className="absolute top-full right-4 mt-2 w-40 bg-gray-800 border rounded flex flex-col gap-3 p-3 sm:hidden z-50">
+          <span>Home</span>
+          <span>About</span>
+          <span>Contact</span>
+        </div>
+      )}
     </nav>
   );
 };

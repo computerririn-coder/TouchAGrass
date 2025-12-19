@@ -7,16 +7,27 @@ import Instructioncarousel from './Components/2Main/Components/InstructionCarous
 import { useState, useEffect } from 'react'
 import { BrowserRouter,Routes,Route } from 'react-router-dom'
 import ErrorMessage from './Components/2Main/Components/ConditionalComponents/ErrorMessage'
-
+import Test from './Components/2Main/Components/Test'
 function App() {
 const [componentVisibility, setComponentVisibility] = useState({
   interactiveImgComponentVisibility: false,
-  ShopVisibility: false,
+  shopVisibility: false,
   instructionsVisibility: false,
   logInVisibility: false,
   itemStorageVisibility: false,
-  achievementsVisibility: true,
+  achievementsVisibility: false,
+  navbarHambugerVisibility: false, //excluded
 });
+
+useEffect(() => {
+  const excludeKeys = ["navbarHambugerVisibility"];
+  const anyVisible = Object.keys(componentVisibility).some(
+    key => !excludeKeys.includes(key) && componentVisibility[key]
+  );
+  document.body.style.overflow = anyVisible ? "hidden" : "auto";
+}, [componentVisibility]);
+
+
 
   const [itemStorage, setItemStorage] = useState<{ name: string; price: number | string; type?: string }[]>(() => {
     const saved = localStorage.getItem("itemStorage");
@@ -30,7 +41,7 @@ const [componentVisibility, setComponentVisibility] = useState({
   <Routes>
      <Route path="/" element={
     <>
-      <NavBar setComponentVisibility={setComponentVisibility} />
+      <NavBar componentVisibility={componentVisibility} setComponentVisibility={setComponentVisibility} />
       <Main itemStorage={itemStorage} setItemStorage={setItemStorage} componentVisibility={componentVisibility} setComponentVisibility={setComponentVisibility}/>
       <Instructioncarousel />
       <SecondMain />

@@ -6,7 +6,7 @@ import styles from "./This.module.css";
 function ContactMe() {
   return (
     <section className="w-full min-h-[40vh] flex flex-col items-center justify-center gap-6 
-      bg-gradient-to-b from-blue-500 to-green-400 text-center px-4">
+      bg-linear-to-b from-blue-500 to-green-400 text-center px-4">
 
       <h1 className={`text-4xl font-bold text-amber-100 ${styles.orbitron}`}>
         Ready to pass time?

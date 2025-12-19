@@ -1,19 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import Countdown from "react-countdown";
+import type {conditionalQuestionDisplayProps, InteractiveImgProps  } from "../Typescript/TypescriptCompilationtypes";
 
-type conditionalQuestionDisplayPropsTS = {
-  type: string | undefined;
-  img: string | undefined;
-  question: string | undefined;
-  answer: string | undefined;
-  choices: string[];
-};
 
-type InteractiveImgProps = {
-  conditionalQuestionDisplayProps: conditionalQuestionDisplayPropsTS;
-  setInteractiveImgComponentVisibility: (visible: boolean) => void;
-  dispatch: (action: any) => void;
-};
 
 function ConditionalQuestionDisplay({
   conditionalQuestionDisplayProps,
@@ -24,7 +13,7 @@ function ConditionalQuestionDisplay({
   const [attempts, setAttempts] = useState<number>(0);
   const [maxAttempts, setMaxAttempts] = useState<number>(0);
 
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<number | null>(null);
 
   const isDisabled = attempts >= maxAttempts || feedback === true;
 

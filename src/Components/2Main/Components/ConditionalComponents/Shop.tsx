@@ -1,27 +1,8 @@
 import { Leaf2, Grass2, Treasure2 } from "../Imports";
 import styles from "./Shop.module.css";
 import { useState, useEffect } from "react";
+import type { ShopItem, Item, PurchasedItem, ShopProps, ItemSectionProps, } from "../Typescript/TypescriptCompilationtypes";
 
-type ShopItem = { IMGSRC: string; price: number; name: string };
-type Item = { name: string; amount: number };
-type PurchasedItem = { name: string; price: number };
-
-type ItemSectionProps = {
-    title: string;
-    image: string;
-    items: ShopItem[];
-    itemsCollected: Item[];
-    setItemsCollected: React.Dispatch<React.SetStateAction<Item[]>>;
-    setItemStorage: React.Dispatch<React.SetStateAction<PurchasedItem[]>>;
-};
-
-type ShopProps = {
-    setItemsCollected: React.Dispatch<React.SetStateAction<Item[]>>;
-    itemsCollected: Item[];
-    itemStorage: PurchasedItem[];
-    setItemStorage: React.Dispatch<React.SetStateAction<PurchasedItem[]>>;
-    setShopVisibility: React.Dispatch<React.SetStateAction<boolean>>;
-};
 
 const ItemsArray = {
     commonItems: [
@@ -65,13 +46,7 @@ function ItemSection({
     setItemsCollected,
     setItemStorage,
 }: ItemSectionProps) {
-      useEffect(() => {
-        document.body.style.overflow = "hidden"; // disable scroll
 
-        return () => {
-            document.body.style.overflow = "auto"; // restore scroll on unmount
-        };
-    }, []);
     return (
         <div className="flex justify-start flex-wrap gap-10 ">
             <div className="h-[16vh] w-[16vh] flex items-center justify-center flex-wrap border-2 border-white rounded-lg p-1">
@@ -80,7 +55,7 @@ function ItemSection({
             <p className="text-lg font-semibold tracking-wide uppercase w-40 self-center text-black drop-shadow-md ">
                 {title}
             </p>
-            <div className="flex gap-4 flex-wrap gap-10 pb-10">
+            <div className="flex  flex-wrap gap-10 pb-10">
                 {items.map((item, index) => (
                     <div key={index} className={styles.itemCard}>
                         <img src={item.IMGSRC} alt={item.name} />
@@ -116,7 +91,7 @@ function Shop({
   
     return (
         <div className="w-screen h-screen flex items-center justify-center absolute top-[45%] left-[50%] -translate-x-[50%] -translate-y-[50%]">
-            <section className="relative w-[80%] h-[75%] bg-gradient-to-b from-blue-500 to-green-400 text-white border-5 border-blue-600 rounded-lg p-1
+            <section className="relative w-[80%] h-[75%] bg-gradient-to-b from-blue-500 to-green-400 text-white border-5 border-blue-600 rounded-lg flex flex-col items-center justify-start pt-10
              overflow-hidden overflow-y-auto overscroll-contain pl-4">
                 <button
                     className="absolute top-4 right-4 text-black text-2xl font-light hover:opacity-70 rounded-full bg-gradient-to-br from-green-400

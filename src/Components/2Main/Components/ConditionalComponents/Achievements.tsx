@@ -1,46 +1,11 @@
 import { BronzeMedal, SilverMedal, GoldMedal } from './../Imports';
-
+import type { Achievement, AchievementCardProps, ComponentVisibility, ItemStorage, AchievementsProps, DifficultyStyle }from '../Typescript/TypescriptCompilationtypes';
 
 /* TYPESCRIPT — ALL any */
 
-type Achievement = {
-  id: string;
-  title: string;
-  condition: string;
-  difficulty: string;
-  status: boolean;
-};
 
-type AchievementCardProps = {
-  achievement: Achievement;
-};
 
-type ComponentVisibility = {
-  achievementsVisibility: boolean;
-};
-
-type ItemStorage = {
-  name: string;
-  price: number | string;
-  type?: string;
-};
-
-type AchievementsProps = {
-  achievement: Achievement[];
-  itemStorage: ItemStorage;
-  setComponentVisibility: React.Dispatch<React.SetStateAction<any>>;
-};
-
-const difficultyColor: { 
-  [key: string]: { 
-    textColor: string; 
-    bgColor: string; 
-    boxColor: string; 
-    medal: string; 
-    claimBtnColor: string; 
-    dispatchName?: string,
-  };  
-} = {
+const difficultyColor: { [key: string]: DifficultyStyle } = {
   Easy: {
     textColor: "text-green-400",
     bgColor: "bg-gradient-to-r from-green-700 to-green-500",
