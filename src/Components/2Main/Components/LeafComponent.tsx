@@ -40,7 +40,9 @@ function LeafComponent({
   leafTreasureCount,
   setLeafTreasureCount,
   dispatch,
-  state
+  state,
+  componentVisibility,
+  setComponentVisibility,
 }: LeafComponentProps) {
   /* VISIBILITY STATE */
   const [visible, setVisible] = useState<number[]>([]);
@@ -99,7 +101,9 @@ function LeafComponent({
           countImg={countImg}
           setCountImg={setCountImg}
           setLeafTreasureCount={setLeafTreasureCount}
+          componentVisibility={componentVisibility}
           setShopVisibility={setShopVisibility}
+          setComponentVisibility={setComponentVisibility}
         />
       </div>
 
@@ -113,7 +117,7 @@ function LeafComponent({
         </div>
       )}
 
-      {ShopVisibility && (
+      {componentVisibility.shopVisibility && (
         <div className="fixed inset-0 flex items-center justify-center backdrop-blur-[0px] overflow-hidden z-50">
           <Shop
             itemsCollected={itemsCollected}
@@ -121,6 +125,7 @@ function LeafComponent({
             setShopVisibility={setShopVisibility}
             itemStorage={itemStorage}
             setItemStorage={setItemStorage}
+            setComponentVisibility={setComponentVisibility}
           />
         </div>
       )}

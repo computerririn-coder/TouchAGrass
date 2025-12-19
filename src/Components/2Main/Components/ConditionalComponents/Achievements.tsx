@@ -32,7 +32,7 @@ const difficultyColor: { [key: string]: DifficultyStyle } = {
 
 
 
-function AchievementCard({ achievement }: AchievementCardProps) {
+function AchievementCard({ achievement, dispatch }: AchievementCardProps) {
   const colors = difficultyColor[achievement.difficulty] || {};
 
   return (
@@ -58,7 +58,15 @@ function AchievementCard({ achievement }: AchievementCardProps) {
   className=" bg-tranparent w-20 h-20 ml-auto"
 />
 
-<button className={`${colors.claimBtnColor} text-gray-900 font-bold py-2 px-4 rounded shadow-md transition-colors duration-200 min-w-15`}>
+<button 
+  className={`${colors.claimBtnColor} text-gray-900 font-bold py-2 px-4 rounded shadow-md transition-colors duration-200 min-w-15`} 
+  onClick={() => {
+    console.log("Claim button clicked!");
+    console.log("Dispatch function:", dispatch);
+dispatch({ type: achievement.dispatchType });
+
+  }}
+>
   Claim reward
 </button>
 </div>
@@ -70,6 +78,7 @@ function Achievements({
   achievement,
   itemStorage,
   setComponentVisibility,
+  dispatch,
 }: AchievementsProps) {
   return (
     <div className="w-screen h-screen flex items-center justify-center absolute top-[45%] left-[50%] -translate-x-[50%] -translate-y-[50%] z-20 overflow-y-auto">
@@ -87,8 +96,8 @@ function Achievements({
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12">
-          {achievement.map((a: Achievement) => (
-            <AchievementCard key={a.id} achievement={a} />
+          {achievement.map((reusableComponent: Achievement) => (
+            <AchievementCard key={reusableComponent.id} achievement={reusableComponent} dispatch={dispatch}/>
           ))}
         </div>
       </section>

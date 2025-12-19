@@ -5,6 +5,8 @@ export const questions = [
     condition: "Enter The Website",
     difficulty: "Easy",
     status: false,
+    dispatchType: "TYPE_ACHIEVEMENTS_ENTERED",
+    isUnlocked: false,
   },
   {
     id: "2",
@@ -12,6 +14,8 @@ export const questions = [
     condition: "Answered A Treasure Level Question",
     difficulty: "Normal",
     status: false,
+    dispatchType: "",
+    isUnlocked: false,
   },
   {
     id: "3",
@@ -19,5 +23,7 @@ export const questions = [
     condition: "Correctly Answered A Treasure Level Question",
     difficulty: "Extreme",
     status: false,
+    dispatchType: "",
+    isUnlocked: false,
   },
 ];

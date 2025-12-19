@@ -4,16 +4,21 @@ import LogIn from "./Components/ConditionalComponents/LogIn";
 import ItemStorageComponent from "./Components/ConditionalComponents/ItemStorageComponent";
 import Achievements from "./Components/ConditionalComponents/Achievements";
 import { useState, useEffect, useReducer } from "react";
-import { questions } from "../../assets/questionsForInterActiveImg";
+import { questions } from "./Components/ConditionalComponents/ForAchievements";
 import type {Item, Action, MainProps, } from "./Components/Typescript/TypescriptCompilationtypes";
 
 /* REDUCER */
-function allItemsReducer(state:  Item[], action: Action) {
+function allItemsReducer(state: Item[], action: Action) {
+  console.log("Reducer called with action:", action);
+  console.log("Current state:", state);
+  
   switch (action.type) {
     case "INCREMENT_leaf":
-      return state.map(item =>
+      const newState = state.map(item =>
         item.name === "leaf" ? { ...item, amount: item.amount + 1 } : item
       );
+      console.log("New state after INCREMENT_leaf:", newState);
+      return newState;
     case "INCREMENT_grass":
       return state.map(item =>
         item.name === "grass" ? { ...item, amount: item.amount + 1 } : item
@@ -22,6 +27,12 @@ function allItemsReducer(state:  Item[], action: Action) {
       return state.map(item =>
         item.name === "treasure" ? { ...item, amount: item.amount + 1 } : item
       );
+      
+    case "TYPE_ACHIEVEMENTS_ENTERED":
+      return state.map(item =>
+        item.name === "leaf" ? { ...item, amount: item.amount + 20 } : item
+      ); 
+
     default:
       return state;
   }
@@ -108,6 +119,7 @@ const [itemsCollected, setItemsCollected] = useState<Item[]>(() => {
         dispatch={dispatch}
         state={state}
         componentVisibility={componentVisibility}
+        setComponentVisibility={setComponentVisibility}
       />
 
       {/* Conditional Components */}
@@ -131,6 +143,7 @@ const [itemsCollected, setItemsCollected] = useState<Item[]>(() => {
           itemStorage={itemStorage}
           achievement={achievement}
           setComponentVisibility={setComponentVisibility}
+          dispatch={dispatch}
         />
       )}
     </main>
