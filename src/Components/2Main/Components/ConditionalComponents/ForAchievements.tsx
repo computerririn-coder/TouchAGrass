@@ -7,6 +7,7 @@ export const questions = [
     status: false,
     dispatchType: "TYPE_ACHIEVEMENTS_ENTERED",
     isUnlocked: false,
+    claimStatus: false,
   },
   {
     id: "2",
@@ -16,6 +17,7 @@ export const questions = [
     status: false,
     dispatchType: "",
     isUnlocked: false,
+    claimStatus: false,
   },
   {
     id: "3",
@@ -25,5 +27,6 @@ export const questions = [
     status: false,
     dispatchType: "",
     isUnlocked: false,
+    claimStatus: false,
   },
 ];
