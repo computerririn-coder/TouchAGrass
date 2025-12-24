@@ -18,7 +18,7 @@ function NavBar({ componentVisibility,setComponentVisibility }) {
         </li>
 
         {/* How To Use */}
-        <li className="h-7 sm:h-8  w-42 px-2 sm:px-4 rounded-full bg-green-600/90 backdrop-blur-sm flex items-center justify-center transition-colors hover:bg-green-700 min-w-0 border-2 [border-color:#C0C0C0]">
+        <li className="h-7 sm:h-8  min-w-30 sm:min-w-32 px-2 sm:px-4 rounded-full bg-green-600/90 backdrop-blur-sm flex items-center justify-center transition-colors hover:bg-green-700 min-w-0 border-2 [border-color:#C0C0C0]">
           <span
             className="font-medium tracking-wide whitespace-nowrap truncate"
             onClick={() =>
@@ -29,6 +29,22 @@ function NavBar({ componentVisibility,setComponentVisibility }) {
             }
           >
             How To Use?
+          </span>
+        </li>
+
+        
+        {/* Achievements */}
+        <li className="invisible md:visible h-7 sm:h-8 w-32 px-2 sm:px-4 rounded-full bg-green-600/90 backdrop-blur-sm flex items-center justify-center transition-colors hover:bg-green-700 min-w-0 border-2 [border-color:#C0C0C0]">
+          <span
+            className="font-medium tracking-wide whitespace-nowrap truncate"
+            onClick={() =>
+              setComponentVisibility((prev): boolean => ({
+                ...prev,
+                customizationVisibility: true,
+              }))
+            }
+          >
+            Customize
           </span>
         </li>
 
@@ -76,7 +92,7 @@ function NavBar({ componentVisibility,setComponentVisibility }) {
         </li>
         </div>
         {/* Hamburger button */}
-<button className="md:hidden ml-auto flex flex-col gap-1 text-3xl"onClick={() => setComponentVisibility(prev => ({
+<button className="absolute md:hidden right-0 pr-5 flex flex-col gap-1 text-3xl "onClick={() => setComponentVisibility(prev => ({
   ...prev,
   navbarHambugerVisibility: true,
 }))}>☰
@@ -84,6 +100,17 @@ function NavBar({ componentVisibility,setComponentVisibility }) {
 
 {componentVisibility.navbarHambugerVisibility && (
 <div className="bg-gradient-to-b from-blue-500 to-green-400 text-white flex flex-col w-36 absolute right-0 top-16 z-20 p-3 shadow-lg rounded-lg space-y-2">
+      <button
+    className="cursor-pointer hover:bg-blue-900 rounded px-2 py-1 transition-colors text-left bg-blue-800"
+    onClick={() =>
+      setComponentVisibility(prev => ({
+        ...prev,
+        logInVisibility: true, //placeholder
+      }))
+    }
+  >
+    Customize
+  </button>
   <button
     className="cursor-pointer hover:bg-blue-900 rounded px-2 py-1 transition-colors text-left bg-blue-800"
     onClick={() =>
@@ -117,6 +144,7 @@ function NavBar({ componentVisibility,setComponentVisibility }) {
   >
     Log In
   </button>
+
 </div>
 )}
 

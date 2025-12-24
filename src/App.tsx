@@ -13,15 +13,16 @@ function App() {
   const [componentVisibility, setComponentVisibility] = useState({
     interactiveImgComponentVisibility: false,
     shopVisibility: false,
-    instructionsVisibility: false,
+    instructionsVisibility: false, // excluded
     logInVisibility: false,
     itemStorageVisibility: false,
     achievementsVisibility: false,
     navbarHambugerVisibility: false, // excluded
+    customizationVisibility: true,
   });
 
   useEffect(() => {
-    const excludeKeys = ['navbarHambugerVisibility'];
+    const excludeKeys = ['navbarHambugerVisibility', 'instructionsVisibility'];
     const anyVisible = Object.keys(componentVisibility).some(
       key => !excludeKeys.includes(key) && componentVisibility[key]
     );
@@ -38,6 +39,24 @@ function App() {
   useEffect(() => {
     localStorage.setItem('itemStorage', JSON.stringify(itemStorage));
   }, [itemStorage]);
+
+useEffect(() => {
+  const hasSeen = localStorage.getItem("hasSeenInstructions");
+
+if (!hasSeen) {
+  setComponentVisibility(prev => {
+    return {
+      ...prev,
+      instructionsVisibility: true,
+    };
+  });
+  
+    localStorage.setItem("hasSeenInstructions", "true");
+  }
+}, []);
+
+
+
 
   return (
     <Routes>

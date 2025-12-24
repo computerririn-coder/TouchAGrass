@@ -1,13 +1,10 @@
 import { Grass } from "../../2Main/Components/Imports";
+import styles from "./This.module.css";
 
 function FeatureCard({ imageSrc, title, description }: any) {
   return (
-    <div className="w-64 h-72 rounded-lg p-6 flex flex-col items-center space-y-4  bg-blue-500 border border-2 border-green-600 shadow-md transform scale-125">
-      <img 
-        src={imageSrc} 
-        alt={title} 
-        className="w-16 h-16 rounded-full object-cover"
-      />
+    <div className={`${styles.card} h-[16rem]`}>
+      <img src={imageSrc} alt={title} className="w-16 h-16 rounded-full object-cover" />
       <h3 className="text-2xl font-semibold text-amber-400">{title}</h3>
       <p className="text-center text-slate-800">{description}</p>
     </div>
@@ -16,32 +13,31 @@ function FeatureCard({ imageSrc, title, description }: any) {
 
 function Features() {
   return (
-    <section className="bg-[#242424] w-full min-h-[50vh] flex flex-col items-center pt-12 px-4 text-amber-400 pb-20 gap-7 ">
-      
-      <h1 className="text-4xl font-bold mb-2">Why Use This Website?</h1>
+    <section className="bg-[#1f1f1f] w-full min-h-[50vh] flex flex-col items-center pt-15 px-4 text-amber-400 pb-10 gap-5">
+      <h1 className="text-4xl font-bold mb-2">FEATURES</h1>
       <h2 className="text-lg text-gray-300 mb-10 text-center max-w-xl">
-        Below Are the Reasons.
+        What the website can do.
       </h2>
 
-      {/* Reusable FeatureCards */}
-      <div className="flex flex-row gap-55 flex-wrap items-center justify-center">
-        <FeatureCard 
-          imageSrc={Grass} 
-          title="Life Changing" 
-          description="“You will never find the true meaning of life if you dont use my website.” — Creator“"
+      <div className="flex flex-row gap-35 flex-wrap items-center justify-center pb-10">
+        <FeatureCard
+          imageSrc={Grass}
+          title="Fully Customizable"
+          description={`Clicking the "Customize" button lets you personalize the website to your liking, including custom backgrounds, images, and more.`}
         />
-        <FeatureCard 
-          imageSrc={Grass} 
-          title="Full Of Wisdom" 
-          description="Grants you new wisdom guaranteed to positively change your life"
+
+        <FeatureCard
+          imageSrc={Grass}
+          title="Fully Responsive"
+          description="Mobile, computer, or even unusually small screens — this website is fully responsive."
         />
-        <FeatureCard 
-          imageSrc={Grass} 
-          title="Gives More Luck" 
-          description="Magically increases your luck in life in ways you never expected."
+
+        <FeatureCard
+          imageSrc={Grass}
+          title="Good UX"
+          description="Designed with good UX, ensuring clear visuals and effortless interaction across the site."
         />
       </div>
-
     </section>
   );
 }

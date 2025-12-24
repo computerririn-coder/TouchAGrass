@@ -3,26 +3,7 @@ import Grass2 from "../../../assets/Grass2.png";
 import Treasure2 from "../../../assets/Treasure2.png";
 
 /* TYPES */
-type Item = { name: string; amount: number; img?: string };
-type Action = { type: string; index?: number };
-
-
-
-type InteractiveImgProps = {
-  allItems: Item[];
-  positions: { top: number; left: number }[];
-  visible: number[];
-  setVisible: React.Dispatch<React.SetStateAction<number[]>>;
-  setInteractiveImgComponentVisibility: React.Dispatch<React.SetStateAction<boolean>>;
-  dispatch: React.Dispatch<Action>;
-  setConditionalQuestionDisplayProps: React.Dispatch<React.SetStateAction<{
-    type: string | undefined;
-    img: string | undefined;
-    question: string | undefined;
-    answer: string | undefined;
-    choices: string[] | undefined[];
-  }>>;
-};
+import type { InteractiveImgProps } from "./ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
 
 

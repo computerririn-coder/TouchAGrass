@@ -1,4 +1,4 @@
-import type { ComponentVisibility, ItemStorageProps } from "../Typescript/TypescriptCompilationtypes";
+import type { ComponentVisibility, ItemStorageProps } from "./ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
 
 function ItemStorageComponent({ itemStorage, setComponentVisibility }: ItemStorageProps) {

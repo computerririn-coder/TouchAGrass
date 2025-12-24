@@ -1,0 +1,16 @@
+[33m16c7b44[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;32mcleanerFile[m[33m)[m s
+[33m6d7ecc0[m s
+[33mf982889[m fixing the typescrips + minor bugs and making code cleaner
+[33m321f11d[m Making the file more cleaner
+[33m54edf94[m[33m ([m[1;31morigin/main[m[33m, [m[1;32mcleanerReducer[m[33m)[m s
+[33mf69868b[m s
+[33m3d3db09[m s
+[33m2628852[m Fix the bug of screen turning blue when spawn more button is click
+[33m7cfbece[m a
+[33m6bd79b2[m conditionalcomponent when img is click is now 90% finished
+[33m67ab52f[m making the event (card trivia like component when any of the img is click (eg. grass)
+[33m962d617[m im near finishing the first main layout and basic functionality
+[33mbaa9135[m initial
+[33mc1ab631[m first commit
+[33m2dfac5d[m first commit
+[33m101c80a[m Initial commit

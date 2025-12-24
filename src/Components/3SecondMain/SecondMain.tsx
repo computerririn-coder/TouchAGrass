@@ -4,8 +4,9 @@ import ContactMe from "./Components/ContactMe";
 function SecondMain() {
     return ( 
         <>
+        <Features/>
         <WhyUse/>
-<Features/>
+
 <ContactMe/>
         </>
      );

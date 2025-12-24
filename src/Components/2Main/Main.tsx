@@ -7,25 +7,25 @@ import ItemStorageComponent from "./Components/ConditionalComponents/ItemStorage
 import Achievements from "./Components/ConditionalComponents/Achievements";
 
 import { questions } from "./Components/ConditionalComponents/ForAchievements";
-import type { Item, Action, MainProps } from "./Components/Typescript/TypescriptCompilationtypes";
+import type { Item, Action, MainProps, reusableSync, Achievement } from "./Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
+import Customization from "./Components/ConditionalComponents/Customization";
+
+
 
 /* Reusable for sync */
-const useLocalStorageSync = (key, value) =>
+const useLocalStorageSync = ({key, value}: reusableSync) =>
   useEffect(() => {
     if (value !== undefined) {
       localStorage.setItem(key, JSON.stringify(value));
     }
   }, [key, value]);
 
-
 /* REDUCER */
 function allItemsReducer(state: Item[], action: Action) {
   switch (action.type) {
     case "INCREMENT_leaf": {
       const newState = state.map(item =>
-        item.name === "leaf"
-          ? { ...item, amount: item.amount + 1 }
-          : item
+        item.name === "leaf" ? { ...item, amount: item.amount + 1 } : item
       );
       console.log("New state after INCREMENT_leaf:", newState);
       return newState;
@@ -33,24 +33,36 @@ function allItemsReducer(state: Item[], action: Action) {
 
     case "INCREMENT_grass":
       return state.map(item =>
-        item.name === "grass"
-          ? { ...item, amount: item.amount + 1 }
-          : item
+        item.name === "grass" ? { ...item, amount: item.amount + 1 } : item
       );
 
     case "INCREMENT_treasure":
       return state.map(item =>
-        item.name === "treasure"
-          ? { ...item, amount: item.amount + 1 }
-          : item
+        item.name === "treasure" ? { ...item, amount: item.amount + 1 } : item
       );
 
-    case "TYPE_ACHIEVEMENTS_ENTERED":
+    case "TYPE_ACHIEVEMENT_1": {
+      window.alert("You Claimed 30 Leaf Currency");
       return state.map(item =>
-        item.name === "leaf"
-          ? { ...item, amount: item.amount + 20 }
-          : item
+        item.name === "leaf" ? { ...item, amount: item.amount + 20 } : item
       );
+    }
+
+    case "TYPE_ACHIEVEMENT_2": {
+      window.alert("You Claimed 30 Grass Currency");
+      return state.map(item =>
+        item.name === "grass" ? { ...item, amount: item.amount + 20 } : item
+      );
+    }
+
+    case "TYPE_ACHIEVEMENT_3": {
+      console.log("Before:", state);
+      const nextState = state.map(item =>
+        item.name === "treasure" ? { ...item, amount: item.amount + 20 } : item
+      );
+      window.alert("You Claimed 30 Treasure Currency");
+      return nextState;
+    }
 
     default:
       return state;
@@ -93,9 +105,7 @@ function Main({
     const saved = localStorage.getItem("leafTreasureCount");
     try {
       const parsed = saved ? JSON.parse(saved) : [4, 2];
-      return Array.isArray(parsed) && parsed.length >= 2
-        ? parsed
-        : [4, 2];
+      return Array.isArray(parsed) && parsed.length >= 2 ? parsed : [4, 2];
     } catch {
       return [4, 2];
     }
@@ -110,22 +120,40 @@ function Main({
   }, [state]);
 
   /* Local Storage */
-useLocalStorageSync("itemsCollected", itemsCollected);
-useLocalStorageSync("leafTreasureCount", leafTreasureCount);
-useLocalStorageSync("achievements", achievement);
-useLocalStorageSync("countImg", countImg);
+useLocalStorageSync({ key: "itemsCollected", value: itemsCollected });
+useLocalStorageSync({ key: "leafTreasureCount", value: leafTreasureCount });
+useLocalStorageSync({ key: "achievements", value: achievement });
+useLocalStorageSync({ key: "countImg", value: countImg });
+  /* Local Storage End */
 
-/*Local Storage End */
-  /* Achievement: entered website */
-  useEffect(() => {
-    setAchievement(prev =>
+/* Achievement: entered website */
+useEffect(() => {
+  setAchievement((prev: Achievement[]) =>
+    prev.map((item, index) =>
+      index === 0 ? { ...item, status: true, isUnlocked: true } : item
+    )
+  );
+}, []);
+
+/* Achievement: You Answered A Treasure Level Question */
+useEffect(() => {
+  const treasureAmount: number =
+    itemsCollected.find(({ name }) => name === "treasure")?.amount || 0;
+
+  if (treasureAmount >= 11 && achievement[1] && !achievement[1].isUnlocked) {
+    setAchievement((prev: Achievement[]) =>
       prev.map((item, index) =>
-        index === 0
-          ? { ...item, status: true, isUnlocked: true }
-          : item
+        index === 1 ? { ...item, status: true, isUnlocked: true } : item
       )
     );
-  }, []);
+  }
+}, [itemsCollected, achievement]);
+
+const [words, setWords] = useState({
+  title: "Collect leaves and unlock",
+  words: ["collections", "stickers", "achievements"]
+});
+
 
   return (
     <main className="w-full min-h-[85vh] bg-black relative overflow-hidden">
@@ -142,12 +170,17 @@ useLocalStorageSync("countImg", countImg);
         state={state}
         componentVisibility={componentVisibility}
         setComponentVisibility={setComponentVisibility}
+        setAchievement={setAchievement}
+        words={words}
+        setWords={setWords}
       />
 
       {componentVisibility.instructionsVisibility && (
-        <Instructions
-          setComponentVisibility={setComponentVisibility}
-        />
+        <Instructions setComponentVisibility={setComponentVisibility} />
+      )}
+
+      {componentVisibility.customizationVisibility && (
+        <Customization setComponentVisibility={setComponentVisibility} words={words} setWords={setWords}/>
       )}
 
       {componentVisibility.logInVisibility && (

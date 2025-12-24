@@ -12,23 +12,7 @@ import {
   BackgroundVideo,
 } from "./Imports";
 import Shop from "./ConditionalComponents/Shop";
-
-/* TYPES */
-type Item = { name: string; amount: number; img?: string; bought?: boolean };
-
-/* COMPONENT */
-interface LeafComponentProps {
-  itemStorage: Item[];
-  setItemStorage: React.Dispatch<React.SetStateAction<Item[]>>;
-  itemsCollected: Item[];
-  setItemsCollected: React.Dispatch<React.SetStateAction<Item[]>>;
-  countImg: number;
-  setCountImg: React.Dispatch<React.SetStateAction<number>>;
-  leafTreasureCount: number[];
-  setLeafTreasureCount: React.Dispatch<React.SetStateAction<number[]>>;
-  dispatch: React.Dispatch<any>;
-  state: Item[];
-}
+import type { Item, LeafComponentProps } from "./ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
 function LeafComponent({ 
   itemStorage, 
@@ -43,6 +27,9 @@ function LeafComponent({
   state,
   componentVisibility,
   setComponentVisibility,
+  setAchievement,
+  words,
+  setWords
 }: LeafComponentProps) {
   /* VISIBILITY STATE */
   const [visible, setVisible] = useState<number[]>([]);
@@ -83,10 +70,10 @@ function LeafComponent({
       <BackgroundVideo background={background} />
 
       <div className="relative z-10">
-        <Title />
+        <Title words={words}setWords={setWords}/>
 
         <InteractiveImg
-          allItems={allItems}
+          allItems={allItems as Item[]}
           positions={positions}
           visible={visible}
           setVisible={setVisible}
@@ -113,6 +100,7 @@ function LeafComponent({
             conditionalQuestionDisplayProps={conditionalQuestionDisplayProps}
             setInteractiveImgComponentVisibility={setInteractiveImgComponentVisibility}
             dispatch={dispatch}
+            setAchievement={setAchievement}
           />
         </div>
       )}

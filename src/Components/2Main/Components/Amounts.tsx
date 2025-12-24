@@ -1,13 +1,5 @@
 import NavBg from '../../../assets/NavBarBackground.jpg';
-
-interface AmountsProps {
-  state: { name: string; amount: number }[];
-  countImg: number;
-  setCountImg: React.Dispatch<React.SetStateAction<number>>;
-  setLeafTreasureCount: React.Dispatch<React.SetStateAction<number[]>>;
-  itemsCollected: { name: string; amount: number }[];
-}
-
+import type { AmountsProps } from './ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
 function Amounts({
   state,
   countImg,

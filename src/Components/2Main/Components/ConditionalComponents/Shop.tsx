@@ -1,3 +1,5 @@
+//personal note: i might thrash this code and make a better one(likely)
+
 import { Leaf2, Grass2, Treasure2 } from "../Imports";
 import styles from "./Shop.module.css";
 import { useState, useEffect } from "react";
@@ -7,7 +9,7 @@ import type {
   PurchasedItem,
   ShopProps,
   ItemSectionProps,
-} from "../Typescript/TypescriptCompilationtypes";
+} from "./ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
 const ItemsArray = {
   commonItems: [
@@ -35,7 +37,7 @@ function handlePurchase(
   setItemStorage: React.Dispatch<React.SetStateAction<PurchasedItem[]>>
 ) {
   const nextItems = itemsCollected.map(el =>
-    el.name === name && el.amount - price >= 0 ? { ...el, amount: el.amount - price } : el
+    el.name === name && (el.amount ?? 0) - price >= 0 ? { ...el, amount: (el.amount ?? 0) - price } : el
   );
   setItemsCollected(nextItems);
 

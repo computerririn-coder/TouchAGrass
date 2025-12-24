@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Countdown from "react-countdown";
-import type {conditionalQuestionDisplayProps, InteractiveImgProps  } from "../Typescript/TypescriptCompilationtypes";
+import type {conditionalQuestionDisplayProps, InteractiveImgProps  } from "./ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
 
 
@@ -8,6 +8,7 @@ function ConditionalQuestionDisplay({
   conditionalQuestionDisplayProps,
   setInteractiveImgComponentVisibility,
   dispatch,
+  setAchievement,
 }: InteractiveImgProps) {
   const [feedback, setFeedback] = useState<boolean | string>("Not Yet Answered");
   const [attempts, setAttempts] = useState<number>(0);
@@ -42,24 +43,35 @@ function ConditionalQuestionDisplay({
     }, 3000);
   }
 
-  function handleAnswer(choice: string) {
-    if (attempts >= maxAttempts) return;
+function handleAnswer(choice: string) {
+  if (attempts >= maxAttempts) return;
 
-    setAttempts((prev) => {
-      const newAttempts = prev + 1;
+  setAttempts((prev) => {
+    const newAttempts = prev + 1;
 
-      if (choice === conditionalQuestionDisplayProps.answer) {
-        setFeedback(true);
-        handleFeedback();
-        dispatch({ type: `INCREMENT_${conditionalQuestionDisplayProps.type}` });
-      } else if (newAttempts >= maxAttempts && choice !== conditionalQuestionDisplayProps.answer) {
-        setFeedback(false);
-        handleFeedback();
+    if (choice === conditionalQuestionDisplayProps.answer) {
+      setFeedback(true);
+      handleFeedback();
+      dispatch({ type: `INCREMENT_${conditionalQuestionDisplayProps.type}` });
+
+      // Update achievement if the type is treasure
+      if (conditionalQuestionDisplayProps.type === "treasure") {
+        setAchievement((prev) =>
+          prev.map((item, index) =>
+            index === 2 ? { ...item, status: true, isUnlocked: true } : item
+          )
+        );
       }
 
-      return newAttempts;
-    });
-  }
+    } else if (newAttempts >= maxAttempts && choice !== conditionalQuestionDisplayProps.answer) {
+      setFeedback(false);
+      handleFeedback();
+    }
+
+    return newAttempts;
+  });
+}
+
 
   useEffect(() => {
     return () => {

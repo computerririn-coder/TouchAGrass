@@ -1,5 +1,5 @@
-import { BronzeMedal, SilverMedal, GoldMedal } from './../Imports';
-import type { Achievement, AchievementCardProps, ComponentVisibility, ItemStorage, AchievementsProps, DifficultyStyle } from '../Typescript/TypescriptCompilationtypes';
+import { BronzeMedal, SilverMedal, GoldMedal } from '../Imports';
+import type { Achievement, AchievementCardProps, ComponentVisibility, ItemStorage, AchievementsProps, DifficultyStyle } from './ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
 
 /* TYPESCRIPT — ALL any */
 
@@ -10,7 +10,6 @@ const difficultyColor: { [key: string]: DifficultyStyle } = {
     boxColor: "bg-green-500",
     medal: BronzeMedal,
     claimBtnColor: "bg-[#CD7F32]",
-    dispatchName: "CLAIM_REWARD_#1",
   },
   Normal: {
     textColor: "text-yellow-400",
@@ -102,9 +101,16 @@ function Achievements({
         </button>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12">
-          {achievement.map((reusableComponent: Achievement) => (
-            <AchievementCard key={reusableComponent.id} achievement={reusableComponent} dispatch={dispatch} setAchievement={setAchievement}/>
-          ))}
+          {achievement
+            .filter(item => item !== null && item !== undefined) // <- ADD THIS FILTER
+            .map((reusableComponent: Achievement) => (
+              <AchievementCard 
+                key={reusableComponent.id} 
+                achievement={reusableComponent} 
+                dispatch={dispatch} 
+                setAchievement={setAchievement}
+              />
+            ))}
         </div>
       </section>
     </div>
