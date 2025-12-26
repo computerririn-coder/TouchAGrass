@@ -5,12 +5,12 @@ import SecondMain from './Components/3SecondMain/SecondMain';
 import Footer from './Components/Footer/Footer';
 import Instructioncarousel from './Components/2Main/Components/InstructionCarousel';
 import { useState, useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import ErrorMessage from './Components/2Main/Components/ConditionalComponents/ErrorMessage';
-import Test from './Components/2Main/Components/Test';
-import { shop_treasure3 } from './Components/2Main/Components/Imports';
+import type { ComponentVisibility } from './Components/2Main/Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
 function App() {
-  const [componentVisibility, setComponentVisibility] = useState({
+  /*Conditional Components Visibility */
+  const [componentVisibility, setComponentVisibility] = useState<boolean[{}]>({
     interactiveImgComponentVisibility: false,
     shopVisibility: false,
     instructionsVisibility: false, // excluded
@@ -20,7 +20,6 @@ function App() {
     navbarHambugerVisibility: false, // excluded
     customizationVisibility: false,
   });
-
   useEffect(() => {
     const excludeKeys = ['navbarHambugerVisibility', 'instructionsVisibility'];
     const anyVisible = Object.keys(componentVisibility).some(
@@ -28,14 +27,14 @@ function App() {
     );
     document.body.style.overflow = anyVisible ? 'hidden' : 'auto';
   }, [componentVisibility]);
+/*End */
 
-
-
+/*For instruction component,it will show only once (when user first enteres the website) */
 useEffect(() => {
   const hasSeen = localStorage.getItem("hasSeenInstructions");
 
 if (!hasSeen) {
-  setComponentVisibility(prev => {
+  setComponentVisibility((prev: ComponentVisibility) => {
     return {
       ...prev,
       instructionsVisibility: true,
@@ -45,7 +44,7 @@ if (!hasSeen) {
     localStorage.setItem("hasSeenInstructions", "true");
   }
 }, []);
-
+/*End */
 
 
 

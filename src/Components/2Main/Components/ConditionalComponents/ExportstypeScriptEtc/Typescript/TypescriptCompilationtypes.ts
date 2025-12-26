@@ -64,12 +64,12 @@ export type ComponentVisibility = {
 };
 
 export type MainProps = {
-  itemStorage: any;
-  itemStorageComponent: Item[];
-  setItemStorage: React.Dispatch<React.SetStateAction<Item[]>>;
   componentVisibility: ComponentVisibility;
-  setComponentVisibility: React.Dispatch<React.SetStateAction<ComponentVisibility>>;
+  setComponentVisibility?: React.Dispatch<React.SetStateAction<ComponentVisibility>>;
 };
+
+
+
 /* End */
 
 /* ConditionalQuestionDisplay */
