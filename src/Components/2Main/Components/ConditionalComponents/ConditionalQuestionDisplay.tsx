@@ -84,7 +84,7 @@ function handleAnswer(choice: string) {
 
   return (
     <section className="relative z-20 mx-auto">
-      <div className="bg-gradient-to-br from-emerald-200 via-emerald-300 to-green-400 mx-auto rounded-2xl shadow-2xl overflow-hidden border border-amber-600 flex flex-col items-center justify-start min-h-80 w-[80%] md:w-full">
+      <div className="bg-gradient-to-br from-emerald-200 via-emerald-300 to-green-400 mx-auto rounded-2xl shadow-2xl overflow-hidden border border-amber-600 flex flex-col items-center justify-start h-[60vh] w-[80%] md:w-full">
         
         <button
           onClick={() => {

@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ErrorMessage from './Components/2Main/Components/ConditionalComponents/ErrorMessage';
 import Test from './Components/2Main/Components/Test';
-
+import { shop_treasure3 } from './Components/2Main/Components/Imports';
 function App() {
   const [componentVisibility, setComponentVisibility] = useState({
     interactiveImgComponentVisibility: false,
@@ -18,7 +18,7 @@ function App() {
     itemStorageVisibility: false,
     achievementsVisibility: false,
     navbarHambugerVisibility: false, // excluded
-    customizationVisibility: true,
+    customizationVisibility: false,
   });
 
   useEffect(() => {
@@ -29,16 +29,7 @@ function App() {
     document.body.style.overflow = anyVisible ? 'hidden' : 'auto';
   }, [componentVisibility]);
 
-  const [itemStorage, setItemStorage] = useState<
-    { name: string; price: number | string; type?: string }[]
-  >(() => {
-    const saved = localStorage.getItem('itemStorage');
-    return saved ? JSON.parse(saved) : [{ name: 'Sample', price: 'Sample' }];
-  });
 
-  useEffect(() => {
-    localStorage.setItem('itemStorage', JSON.stringify(itemStorage));
-  }, [itemStorage]);
 
 useEffect(() => {
   const hasSeen = localStorage.getItem("hasSeenInstructions");
@@ -69,8 +60,6 @@ if (!hasSeen) {
               setComponentVisibility={setComponentVisibility}
             />
             <Main
-              itemStorage={itemStorage}
-              setItemStorage={setItemStorage}
               componentVisibility={componentVisibility}
               setComponentVisibility={setComponentVisibility}
             />

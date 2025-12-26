@@ -4,7 +4,7 @@ import styles from "./This.module.css";
 function FeatureCard({ imageSrc, title, description }: any) {
   return (
     <div className={`${styles.card} h-[16rem]`}>
-      <img src={imageSrc} alt={title} className="w-16 h-16 rounded-full object-cover" />
+      <img src={imageSrc} alt={title} className="w-16 h-16 rounded-full object-cover" loading="lazy"/>
       <h3 className="text-2xl font-semibold text-amber-400">{title}</h3>
       <p className="text-center text-slate-800">{description}</p>
     </div>

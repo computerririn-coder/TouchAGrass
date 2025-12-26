@@ -17,19 +17,28 @@ function ItemStorageComponent({ itemStorage, setComponentVisibility }: ItemStora
           X
         </button>
 
-        <div className="w-full h-full bg-black border-2 border-white rounded-lg shadow-lg p-4 bg-linear-to-br from-green-700 via-emerald-600 to-yellow-600 overflow-auto">
-          <div className="flex flex-row flex-wrap gap-4">
-            {itemStorage.map((e, i) => (
-              <div
-                key={i}
-                className="w-24 h-24 bg-gray-800 border-2 border-white rounded-lg flex flex-col items-center justify-center shadow-md"
-              >
-                <p className="text-white font-semibold text-sm">Type: {e.name}</p>
-                <p className="text-yellow-300 font-bold text-sm">Price: {e.price}</p>
-              </div>
-            ))}
-          </div>
+        <div className="w-full h-full border-2 border-white rounded-lg shadow-lg p-4 bg-gradient-to-br from-green-700 via-emerald-600 to-yellow-600 overflow-auto">
+  <div className="flex flex-row flex-wrap gap-4">
+    {itemStorage.map((e, i) => (
+      <div
+        key={i}
+        className="w-[24vw] max-w-[15rem] h-[24vw] max-h-[15rem] border-2 border-white rounded-lg flex flex-col items-center justify-end shadow-md p-2"
+        style={{
+          backgroundImage: `url(${e.IMGSRC})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat'
+        }}
+      >
+        <div className="bg-black/70 rounded px-2 py-1 w-full">
+          <p className="text-white font-semibold text-sm">Type: {e.type}</p>
+          <p className="text-white font-semibold text-sm">Name: {e.name}</p>
+          <p className="text-yellow-300 font-bold text-sm">Price: {e.price}</p>
         </div>
+      </div>
+    ))}
+  </div>
+</div>
       </div>
     </section>
   );

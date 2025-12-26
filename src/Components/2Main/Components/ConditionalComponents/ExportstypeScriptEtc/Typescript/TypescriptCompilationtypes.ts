@@ -2,14 +2,18 @@ import type { Dispatch, SetStateAction } from "react";
 
 /* Shop */
 export type ShopItem = {
+  type: string,
   IMGSRC: string;
   price: number;
   name: string;
+  currencyType: string;
 };
 
 export type PurchasedItem = {
+  type: string;
   name: string;
   price: number;
+  IMGSRC: URL | string;
 };
 
 export type ItemStorageProps = {
@@ -55,7 +59,8 @@ export type ComponentVisibility = {
   logInVisibility: boolean;
   itemStorageVisibility: boolean;
   achievementsVisibility: boolean;
-  shopVisibility?: boolean;  // <- ADD THIS
+  shopVisibility?: boolean; 
+  customizationVisibility: boolean;
 };
 
 export type MainProps = {

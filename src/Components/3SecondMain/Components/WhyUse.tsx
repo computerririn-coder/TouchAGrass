@@ -3,7 +3,7 @@ import { Grass } from "../../2Main/Components/Imports";
 function FeatureCard({ imageSrc, title, description }: any) {
   return (
     <div className="w-64 h-72 rounded-lg p-6 flex flex-col items-center space-y-4 bg-blue-500 border border-green-600 shadow-md transform scale-125">
-      <img src={imageSrc} alt={title} className="w-16 h-16 rounded-full object-cover" />
+      <img src={imageSrc} alt={title} className="w-16 h-16 rounded-full object-cover" loading="lazy"/>
       <h3 className="text-2xl font-semibold text-amber-400">{title}</h3>
       <p className="text-center text-slate-800">{description}</p>
     </div>

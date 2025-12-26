@@ -29,7 +29,7 @@ function Instructions({ setComponentVisibility }: any) {
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 ">
       <div
-        className={`w-[42%] bg-white rounded-2xl shadow-2xl p-1 transition-all duration-300 transform ${
+        className={`w-[80%] xl:w-[30%] bg-white rounded-2xl shadow-2xl p-1 transition-all duration-300 transform ${
           animation ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
         }`}
       >

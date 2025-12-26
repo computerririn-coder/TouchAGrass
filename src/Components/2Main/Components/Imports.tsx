@@ -15,6 +15,23 @@ export { default as background } from '../../../assets/background.mp4';
 export { default as BronzeMedal } from '../../../assets/Bronze_Medal.jpg';
 export { default as SilverMedal } from '../../../assets/Silver_Medal.jpg'; 
 export { default as GoldMedal } from '../../../assets/Gold_Medal.jpg';
+
+/*Shop */
+//leaf
+export { default as shop_leaf1 } from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/assets/shop_leaf1.jpg";
+export { default as shop_leaf2 } from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/assets/shop_leaf2.jpg";
+export { default as shop_leaf3 } from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/assets/shop_leaf3.jpg";
+
+//grass
+export { default as shop_grass1 } from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/assets/shop_grass1.jpg";
+export { default as shop_grass2 } from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/assets/shop_grass2.jpg";
+export { default as shop_grass3 } from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/assets/shop_grass3.webp";
+
+export { default as shop_treasure1 } from "../../../assets/shop_treasure1.jpg";
+export { default as shop_treasure2 } from "../../../assets/shop_treasure2.jpg";
+export { default as shop_treasure3 } from "../../../assets/shop_treasure3.jpg";
+
+
 // components
 export { default as Title } from './Title';
 export { default as InteractiveImg } from './InteractiveImg';

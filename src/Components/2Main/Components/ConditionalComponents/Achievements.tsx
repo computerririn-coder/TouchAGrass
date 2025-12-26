@@ -55,14 +55,14 @@ function AchievementCard({ achievement, setAchievement, dispatch }: AchievementC
 
 <button 
   className={`${colors.claimBtnColor} text-gray-900 font-bold py-2 px-4 rounded shadow-md transition-colors duration-200 min-w-15 w-30 h-15
-  ${achievement.claimStatus || !achievement.isUnlocked ? "opacity-70 cursor-not-allowed" : ""}`} 
+  ${achievement.claimStatus || !achievement.isUnlocked ? "opacity-50 cursor-not-allowed" : ""}`} 
   onClick={() => {
     if (achievement.claimStatus || !achievement.isUnlocked) return;
     
     setAchievement((prev) => 
       prev.map(item => 
         item.id === achievement.id 
-          ? { ...item, claimStatus: true, status: true } // <- Add status: true
+          ? { ...item, claimStatus: true, status: true } 
           : item
       )
     );

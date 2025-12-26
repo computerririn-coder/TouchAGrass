@@ -1,6 +1,8 @@
 //personal note: i might thrash this code and make a better one(likely)
 
-import { Leaf2, Grass2, Treasure2 } from "../Imports";
+import { Leaf2, Grass2, Treasure2 ,shop_leaf1,shop_leaf2, shop_leaf3, shop_grass1, shop_grass2, shop_grass3, 
+         shop_treasure1, shop_treasure2, shop_treasure3 } from "../Imports";
+
 import styles from "./Shop.module.css";
 import { useState, useEffect } from "react";
 import type {
@@ -13,36 +15,40 @@ import type {
 
 const ItemsArray = {
   commonItems: [
-    { name: "leaf", IMGSRC: Leaf2, price: 1 },
-    { name: "leaf", IMGSRC: Leaf2, price: 2 },
-    { name: "leaf", IMGSRC: Leaf2, price: 3 },
+    { type: "Leaf", name: "2x Leaves", IMGSRC: shop_leaf1, price: 1, currencyType: "leaf" },
+    { type: "Leaf", name: "3x Leaves", IMGSRC: shop_leaf2, price: 2, currencyType: "leaf" },
+    { type: "Leaf", name: "12x Leaves", IMGSRC: shop_leaf3, price: 3, currencyType: "leaf" },
   ],
   rareItems: [
-    { name: "grass", IMGSRC: Grass2, price: 1 },
-    { name: "grass", IMGSRC: Grass2, price: 2 },
-    { name: "grass", IMGSRC: Grass2, price: 3 },
+    { type: "Grass", name: "Pieces of grasses", IMGSRC: shop_grass1, price: 1, currencyType: "grass" },
+    { type: "Grass", name: "Dirt with grass", IMGSRC: shop_grass2, price: 2, currencyType: "grass" },
+    { type: "Grass", name: "Land", IMGSRC: shop_grass3, price: 3, currencyType: "grass" },
   ],
   treasureItems: [
-    { name: "treasure", IMGSRC: Treasure2, price: 1 },
-    { name: "treasure", IMGSRC: Treasure2, price: 2 },
-    { name: "treasure", IMGSRC: Treasure2, price: 3 },
+    { type: "Treasure", name: "2x Gold Ring", IMGSRC: shop_treasure1, price: 1, currencyType: "treasure" },
+    { type: "Treasure", name: "Pile of jewelries", IMGSRC: shop_treasure2, price: 2, currencyType: "treasure" },
+    { type: "Treasure", name: "Diamond", IMGSRC: shop_treasure3, price: 3, currencyType: "treasure" },
   ],
 };
+
 
 function handlePurchase(
   setItemsCollected: React.Dispatch<React.SetStateAction<Item[]>>,
   itemsCollected: Item[],
+  type: string,
   name: string,
   price: number,
+  IMGSRC: string,
+  currencyType: string,
   setItemStorage: React.Dispatch<React.SetStateAction<PurchasedItem[]>>
 ) {
   const nextItems = itemsCollected.map(el =>
-    el.name === name && (el.amount ?? 0) - price >= 0 ? { ...el, amount: (el.amount ?? 0) - price } : el
+    el.name === currencyType && (el.amount ?? 0) - price >= 0 ? { ...el, amount: (el.amount ?? 0) - price } : el
   );
   setItemsCollected(nextItems);
 
   // add to itemStorage
-  setItemStorage(prev => [...prev, { name, price }]);
+  setItemStorage(prev => [...prev, { type, name, price, IMGSRC }]);
 }
 
 function ItemSection({
@@ -72,8 +78,11 @@ function ItemSection({
                 handlePurchase(
                   setItemsCollected,
                   itemsCollected,
+                  item.type,
                   item.name,
                   item.price,
+                  item.IMGSRC,
+                  item.currencyType,
                   setItemStorage
                 )
               }
@@ -134,6 +143,18 @@ function Shop({
           setItemsCollected={setItemsCollected}
           setItemStorage={setItemStorage}
         />
+        {/* For Testing 
+        {itemStorage.map((e) => {
+          return (
+            <div>
+                          <p>{e.type}</p>
+            <p>{e.name}</p>
+            <p>{e.price}</p>
+            <p>{e.IMGSRC}</p>
+            </div>
+          )
+        })}
+          */}
       </section>
     </div>
   );

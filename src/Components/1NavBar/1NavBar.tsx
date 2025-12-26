@@ -92,20 +92,23 @@ function NavBar({ componentVisibility,setComponentVisibility }) {
         </li>
         </div>
         {/* Hamburger button */}
-<button className="absolute md:hidden right-0 pr-5 flex flex-col gap-1 text-3xl "onClick={() => setComponentVisibility(prev => ({
+<button className="absolute md:hidden right-0 pr-5 flex flex-col gap-1 text-3xl "onClick={() => 
+setComponentVisibility(prev => ({
   ...prev,
-  navbarHambugerVisibility: true,
-}))}>☰
+  navbarHambugerVisibility: !prev.navbarHambugerVisibility,
+}))
+
+}>☰
 </button>
 
 {componentVisibility.navbarHambugerVisibility && (
-<div className="bg-gradient-to-b from-blue-500 to-green-400 text-white flex flex-col w-36 absolute right-0 top-16 z-20 p-3 shadow-lg rounded-lg space-y-2">
+<div className="bg-gradient-to-b from-blue-500 to-green-400 text-white flex flex-col w-36 absolute right-0 top-16 z-20 p-3 shadow-lg rounded-lg space-y-2 md:hidden">
       <button
     className="cursor-pointer hover:bg-blue-900 rounded px-2 py-1 transition-colors text-left bg-blue-800"
     onClick={() =>
       setComponentVisibility(prev => ({
         ...prev,
-        logInVisibility: true, //placeholder
+        customizationVisibility: true,
       }))
     }
   >
