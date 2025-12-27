@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import Countdown from "react-countdown";
-import type {conditionalQuestionDisplayProps, InteractiveImgProps  } from "./ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
+import type {ConditionalQuestionDisplayComponentProps, InteractiveImgProps  } from "./ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
 
 
@@ -9,7 +9,7 @@ function ConditionalQuestionDisplay({
   setInteractiveImgComponentVisibility,
   dispatch,
   setAchievement,
-}: InteractiveImgProps) {
+}: ConditionalQuestionDisplayComponentProps) {
   const [feedback, setFeedback] = useState<boolean | string>("Not Yet Answered");
   const [attempts, setAttempts] = useState<number>(0);
   const [maxAttempts, setMaxAttempts] = useState<number>(0);

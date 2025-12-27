@@ -2,7 +2,7 @@ import Logo from "../../assets/Logo.png";
 import NavBg from "../../assets/NavBarBackground.jpg";
 import type ItemStorage from "../2Main/Components/ConditionalComponents/ItemStorageComponent";
 
-function NavBar({ componentVisibility,setComponentVisibility }) {
+function NavBar({ componentVisibility,setComponentVisibility, img }) {
   return (
     <nav
       className="w-full h-14 bg-cover bg-center shadow-md bg-gradient-to-b from-blue-700 to-green-600"
@@ -11,7 +11,7 @@ function NavBar({ componentVisibility,setComponentVisibility }) {
         {/* Logo */}
         <li className="flex items-center flex-shrink-0">
           <img
-            src={Logo}
+            src={img.logo}
             alt="Logo"
             className="w-8 h-8 sm:w-9 sm:h-9 drop-shadow-lg"
           />

@@ -7,7 +7,9 @@ import Achievements from "./Components/ConditionalComponents/Achievements";
 import Customization from "./Components/ConditionalComponents/Customization";
 
 import { questions } from "./Components/ConditionalComponents/ForAchievements";
-import type {Item, Action, MainProps, reusableSync, Achievement, } from "./Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
+import type {Item, Action, MainProps, ReusableSync, Achievement, PurchasedItem } from "./Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
+import { shop_treasure3 } from "./Components/Imports";
+import Test from "./Components/Test";
 
 /* REDUCER */
 function allItemsReducer(state: Item[], action: Action) {
@@ -69,14 +71,14 @@ function allItemsReducer(state: Item[], action: Action) {
 }
 
 /* Reusable localStorage sync */
-const useLocalStorageSync = ({ key, value }: reusableSync) =>
+const useLocalStorageSync = ({ key, value }: ReusableSync) =>
   useEffect(() => {
     if (value !== undefined) {
       localStorage.setItem(key, JSON.stringify(value));
     }
   }, [key, value]);
 
-function Main({ componentVisibility, setComponentVisibility }: MainProps) {
+function Main({ componentVisibility, setComponentVisibility, img, setImg }: MainProps) {
   const [achievement, setAchievement] = useState(() => {
     const saved = localStorage.getItem("achievements");
     return saved ? JSON.parse(saved) : questions;
@@ -142,17 +144,32 @@ function Main({ componentVisibility, setComponentVisibility }: MainProps) {
     }
   }, [itemsCollected, achievement]);
 
+  //For Customization
   const [words, setWords] = useState({
     title: "Collect leaves and unlock",
     words: ["collections", "stickers", "achievements"],
   });
 
-  const [itemStorage, setItemStorage] = useState<
-    { name: string; price: number; bgImg: string }[]
-  >(() => {
-    const saved = localStorage.getItem("itemStorage");
-    return saved ? JSON.parse(saved) : [];
-  });
+
+
+
+  //End
+
+const [itemStorage, setItemStorage] = useState<PurchasedItem[]>(() => {
+  const saved = localStorage.getItem("itemStorage");
+
+  if (saved) {
+    return JSON.parse(saved);
+  }else return [
+    {
+      type: "Sample",
+      name: "Diamond",
+      price: 99,
+      IMGSRC: shop_treasure3,
+    },
+  ];
+});
+
 
   useEffect(() => {
     localStorage.setItem("itemStorage", JSON.stringify(itemStorage));
@@ -187,6 +204,8 @@ function Main({ componentVisibility, setComponentVisibility }: MainProps) {
           setComponentVisibility={setComponentVisibility}
           words={words}
           setWords={setWords}
+          img={img}
+          setImg={setImg}
         />
       )}
 

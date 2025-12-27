@@ -1,9 +1,8 @@
 import Leaf2 from "../../../assets/Leaf2.png";
 import Grass2 from "../../../assets/Grass2.png";
 import Treasure2 from "../../../assets/Treasure2.png";
-
-/* TYPES */
 import type { InteractiveImgProps } from "./ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
+/* TYPES */
 
 
 

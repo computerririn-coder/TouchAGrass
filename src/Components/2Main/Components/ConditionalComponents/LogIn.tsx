@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import GoogleLogo from "../../../../assets/GoogleLogo.png";
+import { GoogleLogin } from "@react-oauth/google";
 
 function LogIn({ componentVisibility, setComponentVisibility }: any) {
   const [animation, setAnimation] = useState(false);
@@ -29,13 +29,7 @@ function LogIn({ componentVisibility, setComponentVisibility }: any) {
       <div className="w-full max-w-md bg-gradient-to-b from-blue-500 to-green-400 border border-gray-700 rounded-xl shadow-xl p-8 relative">
         <button
           onClick={handleClose}
-          className="
-            absolute -top-5 -right-5
-            h-10 w-10 flex items-center justify-center
-            rounded-full bg-gray-800 border border-gray-600
-            text-white text-2xl font-bold
-            hover:scale-110 hover:shadow-lg transition-all
-          "
+          className="absolute -top-5 -right-5 h-10 w-10 flex items-center justify-center rounded-full bg-gray-800 border border-gray-600 text-white text-2xl font-bold"
         >
           ×
         </button>
@@ -44,37 +38,28 @@ function LogIn({ componentVisibility, setComponentVisibility }: any) {
           Log In
         </h1>
 
-        <button
-          type="button"
-          className="w-full flex items-center justify-center gap-2 py-2 border border-gray-600 rounded-md bg-white text-black hover:bg-gray-100 transition-colors mb-4"
-        >
-          <img src={GoogleLogo} alt="Google" className="w-5 h-5" />
-          Log in with Google
-        </button>
+        <GoogleLogin
+          onSuccess={(res) => {
+            console.log(res);
+          }}
+          onError={() => {
+            console.log("Google Login Failed");
+          }}
+        />
 
-        <div className="mt-2 text-center text-gray-400 text-sm mb-4">or</div>
+        <div className="mt-4 text-center text-gray-400 text-sm">or</div>
 
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 mt-4">
           <input
             type="email"
             placeholder="Enter your email"
             className="px-3 py-2 bg-black text-white border border-gray-600 rounded-md w-full"
           />
-          <button className="w-full py-2 bg-white text-black font-semibold rounded-md hover:bg-gray-100 transition-colors">
+          <button className="w-full py-2 bg-white text-black font-semibold rounded-md">
             Send Magic Link
           </button>
+          <p className="text-sm text-center">Note This LogIn Component Have No Backend or Functionality</p>
         </div>
-
-        <p className="mt-6 text-xs text-center text-gray-900">
-          By logging in, you agree to our{" "}
-          <a href="#" className="underline text-blue-600 hover:text-gray-300">
-            Terms of Service
-          </a>{" "}
-          and{" "}
-          <a href="#" className="underline text-blue-600 hover:text-gray-300">
-            Privacy Policy
-          </a>.
-        </p>
       </div>
     </div>
   );

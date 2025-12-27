@@ -55,39 +55,51 @@ export type Action = {
 };
 
 export type ComponentVisibility = {
+  interactiveImgComponentVisibility: boolean;
   instructionsVisibility: boolean;
   logInVisibility: boolean;
   itemStorageVisibility: boolean;
   achievementsVisibility: boolean;
   shopVisibility?: boolean; 
   customizationVisibility: boolean;
+  navbarHambugerVisibility:boolean;
 };
 
 export type MainProps = {
   componentVisibility: ComponentVisibility;
-  setComponentVisibility?: React.Dispatch<React.SetStateAction<ComponentVisibility>>;
+  setComponentVisibility: React.Dispatch<React.SetStateAction<ComponentVisibility>>;
 };
-
-
 
 /* End */
 
-/* ConditionalQuestionDisplay */
-export type conditionalQuestionDisplayProps = {
-  type: string | undefined;
-  img: string | undefined;
-  question: string | undefined;
-  answer: string | undefined;
+
+
+/*InteractiveImg */
+export type QuestionItem = {
+  type: string;
+  img: string;
+  question: string;
+  answer: string;
   choices: string[];
 };
 
-export type InteractiveImgProps = {
-  conditionalQuestionDisplayProps: conditionalQuestionDisplayProps;
-  setInteractiveImgComponentVisibility: React.Dispatch<React.SetStateAction<boolean>>;
-  dispatch: React.Dispatch<Action>;
-  setAchievement: Dispatch<SetStateAction<Achievement[]>>;
+export type ImgQuestionAnswerEtc = {
+  leaf: QuestionItem[];
+  grass: QuestionItem[];
+  treasure: QuestionItem[];
 };
-/* End */
+
+export type InteractiveImgProps = {
+  allItems: { name: string; img: string }[];
+  positions: { top: number; left: number }[];
+  visible: number[];
+  setVisible: React.Dispatch<React.SetStateAction<number[]>>;
+  setInteractiveImgComponentVisibility: React.Dispatch<React.SetStateAction<boolean>>;
+  dispatch: React.Dispatch<any>;
+  setConditionalQuestionDisplayProps: React.Dispatch<React.SetStateAction<QuestionItem>>;
+};
+
+
 
 /* Achievement */
 export type Achievement = {
@@ -96,15 +108,15 @@ export type Achievement = {
   condition: string;
   difficulty: string;
   status: boolean;
-  isUnlocked: boolean;  // <- ADD THIS
-  claimStatus: boolean;  // <- ADD THIS
-  dispatchType: string;  // <- ADD THIS
+  isUnlocked: boolean;  
+  claimStatus: boolean;  
+  dispatchType: string;  
 };
 
 export type AchievementCardProps = {
   achievement: Achievement;
-  dispatch: React.Dispatch<Action>;  // <- ADD THIS
-  setAchievement: React.Dispatch<React.SetStateAction<Achievement[]>>;  // <- ADD THIS
+  dispatch: React.Dispatch<Action>; 
+  setAchievement: React.Dispatch<React.SetStateAction<Achievement[]>>; 
 };
 
 export type ItemStorage = {
@@ -112,10 +124,10 @@ export type ItemStorage = {
   price: number | string;
   type?: string;
 };
-
+pp
 export type AchievementsProps = {
   achievement: Achievement[];
-  itemStorage: ItemStorage;
+  itemStorage: PurchasedItem[]; 
   setAchievement: React.Dispatch<React.SetStateAction<Achievement[]>>;
   setComponentVisibility: React.Dispatch<React.SetStateAction<any>>;
   dispatch: React.Dispatch<Action>;
@@ -133,19 +145,19 @@ export type DifficultyStyle = {
 
 /* Amount */
 export type AmountsProps = {
-  state: { name: string; amount?: number }[];  // <- Made amount optional
+  state: { name: string; amount?: number }[]; 
   countImg: number;
   setCountImg: React.Dispatch<React.SetStateAction<number>>;
   setLeafTreasureCount: React.Dispatch<React.SetStateAction<number[]>>;
-  itemsCollected: { name: string; amount?: number }[];  // <- Made amount optional
+  itemsCollected: { name: string; amount?: number }[];  // 
   setComponentVisibility: React.Dispatch<React.SetStateAction<ComponentVisibility>>;
-  componentVisibility: ComponentVisibility;  // <- ADD THIS
-  setShopVisibility: React.Dispatch<React.SetStateAction<boolean>>;  // <- ADD THIS
+  componentVisibility: ComponentVisibility; 
+  setShopVisibility: React.Dispatch<React.SetStateAction<boolean>>; 
 }
 /* End */
 
 /* reusableSync */
-export type reusableSync = {
+export type ReusableSync = {
   key: string;
   value: any;
 }
@@ -153,8 +165,8 @@ export type reusableSync = {
 
 /* LeafComponent */
 export type LeafComponentProps = {
-  itemStorage: Item[];
-  setItemStorage: React.Dispatch<React.SetStateAction<Item[]>>;
+  itemStorage: PurchasedItem[];
+  setItemStorage: React.Dispatch<React.SetStateAction<PurchasedItem[]>>; 
   itemsCollected: Item[];
   setItemsCollected: React.Dispatch<React.SetStateAction<Item[]>>;
   countImg: number;
@@ -166,21 +178,29 @@ export type LeafComponentProps = {
   componentVisibility: ComponentVisibility;
   setComponentVisibility: Dispatch<SetStateAction<ComponentVisibility>>;
   setAchievement: Dispatch<SetStateAction<Achievement[]>>;
+  words: { title: string; words: string[] }; 
+  setWords: React.Dispatch<React.SetStateAction<{ title: string; words: string[] }>>;
 }
 /* End */
 
 /* InteractiveImgComponent */
 export type ConditionalQuestionDisplayProps = {
-  type?: string;
-  img?: string;
-  question?: string;
-  answer?: string;
-  choices?: string[];
+  type: string;
+  img: string;
+  question: string;
+  answer: string;
+  choices: string[];
+};
+export type ConditionalQuestionDisplayComponentProps = {
+  conditionalQuestionDisplayProps: ConditionalQuestionDisplayProps;
+  setInteractiveImgComponentVisibility: React.Dispatch<React.SetStateAction<boolean>>;
+  dispatch: React.Dispatch<any>;
+  setAchievement: React.Dispatch<React.SetStateAction<Achievement[]>>;
 };
 
 export type InteractiveImgComponentProps = {
   allItems: Item[];
-  positions: { top: number; left: number }[];
+  positions: { top: number; left: number }[]; 
   visible: number[];
   setVisible: React.Dispatch<React.SetStateAction<number[]>>;
   setInteractiveImgComponentVisibility: React.Dispatch<React.SetStateAction<boolean>>;
@@ -190,3 +210,15 @@ export type InteractiveImgComponentProps = {
 
 
 /* End */
+
+/*CustomizationProps */
+export type CustomizationProps = {
+  words: { 
+    title: string; 
+    words: string[]; 
+  };
+  setWords: React.Dispatch<React.SetStateAction<{ title: string; words: string[] }>>;
+  setComponentVisibility: React.Dispatch<React.SetStateAction<ComponentVisibility>>;
+};
+
+/*End */

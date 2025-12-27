@@ -1,13 +1,29 @@
 import { InputNumber, Upload } from "antd";
 import { useState, useEffect } from "react";
+import type { ComponentVisibility, CustomizationProps } from "./ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
-function Customization({ setComponentVisibility, words, setWords }: any) {
+function Customization({ setComponentVisibility, words, setWords, img, setImg }: CustomizationProps) {
   const [animation, setAnimation] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [titleFocus, setTitleFocus] = useState<boolean>(false);
   const [wordsIndex, setWordsIndex] = useState<number>(0);
   const [wordsNewWord, setWordsNewWord] = useState<string>("");
-  const [userImg, setUserImg] = useState<File | null>(null);
+
+  // Convert file to base64
+  const fileToBase64 = (file: File): Promise<string> =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = error => reject(error);
+    });
+
+  // Usage
+  const handleUpload = async (file: File) => {
+    const base64 = await fileToBase64(file);
+    setImg(prev => ({ ...prev, logo: base64 }));
+    localStorage.setItem("img", JSON.stringify({ ...img, logo: base64 }));
+  };
 
   useEffect(() => {
     setAnimation(true);
@@ -16,7 +32,7 @@ function Customization({ setComponentVisibility, words, setWords }: any) {
   const handleClose = () => {
     setAnimation(false);
     setTimeout(() => {
-      setComponentVisibility((prev: any) => ({
+      setComponentVisibility((prev: ComponentVisibility) => ({
         ...prev,
         customizationVisibility: false,
       }));
@@ -27,7 +43,7 @@ function Customization({ setComponentVisibility, words, setWords }: any) {
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black/40 w-full p-4">
       <div
         className={`flex flex-col items-center relative w-full sm:w-[90%] md:w-[70%] lg:w-[50%] 
-          h-auto max-h-[90vh]  bg-white rounded-2xl p-4 sm:p-6 overflow-auto
+          h-auto max-h-[90vh] bg-white rounded-2xl p-4 sm:p-6 overflow-auto
           bg-linear-to-br from-green-400 to-yellow-300 border-4 border-blue-600 
           transition-all duration-300 ${
             animation ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-6"
@@ -39,7 +55,7 @@ function Customization({ setComponentVisibility, words, setWords }: any) {
           className="absolute right-2 top-2 h-8 w-8 sm:h-10 sm:w-10 
             flex items-center justify-center rounded-full bg-gradient-to-br from-green-300 to-green-500
             border border-amber-600 text-red-800 text-xl sm:text-2xl font-bold
-            shadow-lg hover:scale-110 hover:shadow-xl transition-all "
+            shadow-lg hover:scale-110 hover:shadow-xl transition-all"
         >
           ×
         </button>
@@ -48,17 +64,18 @@ function Customization({ setComponentVisibility, words, setWords }: any) {
           CUSTOMIZATION PAGE
         </h5>
 
-       {/* Top Section - Forms and Preview */}
-        <div className="flex flex-col lg:flex-row justify-center items-stretch gap-4 sm:gap-6 
+        {/* Top Section - Forms and Preview */}
+        <div
+          className="flex flex-col lg:flex-row justify-center items-stretch gap-4 sm:gap-6 
           bg-gray-50 p-3 sm:p-4 rounded-xl border border-gray-200 w-full
-          bg-gradient-to-b from-blue-500 to-green-400">
-          
+          bg-gradient-to-b from-blue-500 to-green-400"
+        >
           {/* 1: Text Title */}
           <form
             className="flex flex-col gap-2 w-full lg:flex-1 lg:min-w-0"
             onSubmit={(e) => {
               e.preventDefault();
-              setWords((prev) => ({
+              setWords((prev: any) => ({
                 ...prev,
                 title: title,
               }));
@@ -77,7 +94,7 @@ function Customization({ setComponentVisibility, words, setWords }: any) {
               placeholder="e.g. Collect leaves"
               className="w-full rounded-lg border border-gray-300 bg-white px-3 py-2 
                 text-sm text-gray-800 placeholder:text-gray-500 
-                focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400" 
+                focus:outline-none focus:ring-2 focus:ring-green-400 focus:border-green-400"
               onChange={(e) => setTitle(e.target.value)}
               onFocus={() => setTitleFocus(true)}
               onBlur={() => setTitleFocus(false)}
@@ -86,7 +103,7 @@ function Customization({ setComponentVisibility, words, setWords }: any) {
             <button
               type="submit"
               className="h-10 w-full rounded-lg bg-green-500 px-6 text-sm font-semibold text-white
-                hover:bg-green-600 active:scale-95 transition-all "
+                hover:bg-green-600 active:scale-95 transition-all"
             >
               Submit
             </button>
@@ -117,11 +134,8 @@ function Customization({ setComponentVisibility, words, setWords }: any) {
                 min={1}
                 max={3}
                 placeholder="index #"
-                onChange={(value) => setWordsIndex(value)}
-                 style={{
-    width: "30%",
-
-  }}
+                onChange={(value: number | null) => setWordsIndex(value ?? 1)}
+                style={{ width: "30%" }}
               />
 
               <input
@@ -177,65 +191,57 @@ function Customization({ setComponentVisibility, words, setWords }: any) {
 
         {/* Bottom Section - Image Upload */}
         <div className="flex flex-col lg:flex-row w-full gap-4 sm:gap-5 mt-4">
-          
           {/* Left Box - Upload */}
-          <div className="flex flex-col justify-start items-start gap-4 bg-gray-50 p-3 sm:p-4
-            rounded-xl border border-gray-200 w-full lg:w-[50%]
-            bg-gradient-to-b from-blue-500 to-green-400">
-            
-            <Upload
-              className="bg-slate-400 w-full sm:w-auto px-4 py-3 grid place-items-center 
-                border-2 border-blue-700 rounded-md"
-              accept="image/*"
-              beforeUpload={(file) => {
-                setUserImg(file);
-                return false;
-              }}
-            >
-              <button className="text-sm sm:text-base">Select image</button>
-            </Upload>
+          <div
+  className="flex flex-col justify-start items-start gap-4 bg-gray-50 p-3 sm:p-4
+    rounded-xl border border-gray-200 w-full lg:w-[50%]
+    bg-gradient-to-b from-blue-500 to-green-400"
+>
+<div className="flex flex-row gap-4">
+  {/* Left column - Upload */}
+  <div className="flex flex-col gap-2">
+    <Upload
+      accept="image/*"
+      showUploadList={false}
+      beforeUpload={(file) => {
+        handleUpload(file as File);
+        return false;
+      }}
+    >
+      <div className="w-full h-20 flex items-center justify-center border-2 border-dashed border-gray-400 rounded-lg cursor-pointer hover:border-green-500 transition">
+        <p className="text-gray-600 text-center text-sm sm:text-base">
+          Click or drag image here
+        </p>
+      </div>
+    </Upload>
 
-            <div 
-              style={{
-                display: "grid",
-                gridTemplateAreas: `
-                  "one one"
-                  "two three"`,
-                gridTemplateColumns: "1fr 1fr",
-              }}
-              className="gap-2 w-full"
-            >
-              <p 
-                style={{ gridArea: "one" }} 
-                className="text-sm sm:text-base font-semibold text-gray-800"
-              >
-                Change Icon Img
-              </p>
-              
-              <button  
-                style={{ gridArea: "two" }} 
-                className="w-full px-3 py-2 text-sm sm:text-base bg-green-500 text-white 
-                  rounded-lg hover:bg-green-600 transition"
-              >
-                Submit
-              </button>
-              
-              <button 
-                style={{ gridArea: "three" }} 
-                className="w-full px-3 py-2 text-sm sm:text-base bg-red-600 text-white 
-                  rounded-lg hover:bg-red-700 transition"
-              >
-                Reset
-              </button>
-            </div>
-          </div>
+    <p className="text-sm sm:text-base font-semibold text-gray-800">
+      Change Icon Img
+    </p>
+  </div>
+
+  {/* Right column - Box */}
+  <div className="w-full h-full flex items-center justify-center border-2 border-gray-400 rounded-lg bg-gray-100 ml-auto">
+<img src={img.logo} alt="Logo Image" className="w-[30%] h-[30%]"/>
+  </div>
+</div>
+
+{/* Submit button below */}
+<button
+  className="w-full px-3 py-2 text-sm sm:text-base bg-green-500 text-white 
+    rounded-lg hover:bg-green-600 transition mt-4"
+>
+  Submit
+</button>
+
+</div>
 
           {/* Right Box - Placeholder */}
-          <div className="flex flex-row justify-center items-center gap-6 bg-gray-50 p-3 sm:p-4
+          <div
+            className="flex flex-row justify-center items-center gap-6 bg-gray-50 p-3 sm:p-4
             rounded-xl border border-gray-200 w-full lg:w-[50%]
             bg-gradient-to-b from-blue-500 to-green-400 min-h-[150px]"
           >
-            <p className="text-gray-600 text-sm">Additional content here</p>
           </div>
         </div>
       </div>

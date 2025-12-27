@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {
   useUniquePositions,
   Leaf,
@@ -12,7 +12,7 @@ import {
   BackgroundVideo,
 } from "./Imports";
 import Shop from "./ConditionalComponents/Shop";
-import type { Item, LeafComponentProps } from "./ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
+import type { LeafComponentProps, InteractiveImgComponentProps, QuestionItem } from "./ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
 function LeafComponent({ 
   itemStorage, 
@@ -29,7 +29,7 @@ function LeafComponent({
   setComponentVisibility,
   setAchievement,
   words,
-  setWords
+  setWords,
 }: LeafComponentProps) {
   /* VISIBILITY STATE */
   const [visible, setVisible] = useState<number[]>([]);
@@ -38,14 +38,15 @@ function LeafComponent({
   const [ShopVisibility, setShopVisibility] = useState(false);
 
   /* CONDITIONAL DISPLAY PROPS */
-  const [conditionalQuestionDisplayProps, setConditionalQuestionDisplayProps] =
-    useState({
-      type: undefined as undefined | string,
-      img: undefined as undefined | string,
-      question: undefined as undefined | string,
-      answer: undefined as undefined | string,
-      choices: [] as string[] | undefined[]
-    });
+const [conditionalQuestionDisplayProps, setConditionalQuestionDisplayProps] =
+  useState<QuestionItem>({
+    type: "",
+    img: "",
+    question: "",
+    answer: "",
+    choices: [],
+  });
+
 
   /* "Spawn special" btn */
   const [itemConfig] = useState([
@@ -73,7 +74,7 @@ function LeafComponent({
         <Title words={words}setWords={setWords}/>
 
         <InteractiveImg
-          allItems={allItems as Item[]}
+          allItems={allItems}
           positions={positions}
           visible={visible}
           setVisible={setVisible}

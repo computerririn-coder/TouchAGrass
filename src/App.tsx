@@ -8,9 +8,11 @@ import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import ErrorMessage from './Components/2Main/Components/ConditionalComponents/ErrorMessage';
 import type { ComponentVisibility } from './Components/2Main/Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
+import Logo from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/assets/Logo.png";
+
 function App() {
   /*Conditional Components Visibility */
-  const [componentVisibility, setComponentVisibility] = useState<boolean[{}]>({
+  const [componentVisibility, setComponentVisibility] = useState<ComponentVisibility>({
     interactiveImgComponentVisibility: false,
     shopVisibility: false,
     instructionsVisibility: false, // excluded
@@ -20,13 +22,13 @@ function App() {
     navbarHambugerVisibility: false, // excluded
     customizationVisibility: false,
   });
-  useEffect(() => {
-    const excludeKeys = ['navbarHambugerVisibility', 'instructionsVisibility'];
-    const anyVisible = Object.keys(componentVisibility).some(
-      key => !excludeKeys.includes(key) && componentVisibility[key]
-    );
-    document.body.style.overflow = anyVisible ? 'hidden' : 'auto';
-  }, [componentVisibility]);
+useEffect(() => {
+  const excludeKeys: (keyof ComponentVisibility)[] = ['navbarHambugerVisibility', 'instructionsVisibility'];
+  const anyVisible = (Object.keys(componentVisibility) as (keyof ComponentVisibility)[])
+    .some(key => !excludeKeys.includes(key) && componentVisibility[key]);
+  document.body.style.overflow = anyVisible ? 'hidden' : 'auto';
+}, [componentVisibility]);
+
 /*End */
 
 /*For instruction component,it will show only once (when user first enteres the website) */
@@ -46,7 +48,16 @@ if (!hasSeen) {
 }, []);
 /*End */
 
+//For Customization
 
+const [img, setImg] = useState<any>(() => {
+  const stored = localStorage.getItem("img");
+  return stored ? JSON.parse(stored) : { logo: Logo, 1: null, 2: null, 3: null };
+});
+
+useEffect(() => {
+  localStorage.setItem("img", JSON.stringify(img));
+}, [img]);
 
   return (
     <Routes>
@@ -57,10 +68,13 @@ if (!hasSeen) {
             <NavBar
               componentVisibility={componentVisibility}
               setComponentVisibility={setComponentVisibility}
+              img={img}
             />
             <Main
               componentVisibility={componentVisibility}
               setComponentVisibility={setComponentVisibility}
+              img={img}
+              setImg={setImg}
             />
             <Instructioncarousel />
             <SecondMain />
