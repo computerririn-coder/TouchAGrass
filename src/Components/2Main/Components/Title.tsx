@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { Typewriter } from "react-simple-typewriter";
+import type { TitleProps } from "./ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
-function Title({words, setWords}) {
+
+function Title({words, setWords}: TitleProps) {
 
 
   return (

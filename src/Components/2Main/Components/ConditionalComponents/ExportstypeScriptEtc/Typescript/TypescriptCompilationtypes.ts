@@ -240,3 +240,13 @@ export type CustomizationProps = {
 };
 
 /*End */
+
+/*TItle */
+export type TitleProps = {
+  words: {
+    title: string;
+    words: string[];
+  };
+  setWords: Dispatch<SetStateAction<{ title: string; words: string[] }>>;
+};
+/*End */
