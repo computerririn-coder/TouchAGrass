@@ -9,7 +9,6 @@ import Customization from "./Components/ConditionalComponents/Customization";
 import { questions } from "./Components/ConditionalComponents/ForAchievements";
 import type {Item, Action, MainProps, ReusableSync, Achievement, PurchasedItem } from "./Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 import { shop_treasure3 } from "./Components/Imports";
-import Test from "./Components/Test";
 
 /* REDUCER */
 function allItemsReducer(state: Item[], action: Action) {
