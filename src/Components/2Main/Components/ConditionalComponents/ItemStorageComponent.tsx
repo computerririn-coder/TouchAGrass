@@ -1,3 +1,5 @@
+//itemStorage: found in navbar "Item Storage" ,lets user see  items thats she/he/others/them/they have purchase
+
 import type { ComponentVisibility, ItemStorageProps } from "./ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
 

@@ -1,3 +1,5 @@
+//InstructionsCarousel: this is the infinitely moving yellow bar thing you see just below the Ammount Component(the one with lots of button)
+
 import Marquee from "react-fast-marquee";
 
 function InstructionCarousel() {

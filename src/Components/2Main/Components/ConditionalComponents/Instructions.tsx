@@ -1,3 +1,5 @@
+//Instructions: navbar => instruction
+
 import { useState, useEffect } from "react";
 
 function Instructions({ setComponentVisibility }: any) {

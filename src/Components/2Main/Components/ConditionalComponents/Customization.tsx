@@ -1,3 +1,5 @@
+//Customization: Found in navbar,lets user customize the websites text,img,etc
+
 import { InputNumber, Upload } from "antd";
 import { useState, useEffect } from "react";
 import type { ComponentVisibility, CustomizationProps } from "./ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
@@ -9,7 +11,7 @@ function Customization({ setComponentVisibility, words, setWords, img, setImg }:
   const [wordsIndex, setWordsIndex] = useState<number>(0);
   const [wordsNewWord, setWordsNewWord] = useState<string>("");
 
-  // Convert file to base64
+  // Convert file to base64(From AI)
   const fileToBase64 = (file: File): Promise<string> =>
     new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -21,9 +23,10 @@ function Customization({ setComponentVisibility, words, setWords, img, setImg }:
   // Usage
   const handleUpload = async (file: File) => {
     const base64 = await fileToBase64(file);
-    setImg(prev => ({ ...prev, logo: base64 }));
+    setImg((prev: any) => ({ ...prev, logo: base64 }));
     localStorage.setItem("img", JSON.stringify({ ...img, logo: base64 }));
   };
+//End
 
   useEffect(() => {
     setAnimation(true);

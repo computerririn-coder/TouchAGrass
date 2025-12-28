@@ -1,4 +1,4 @@
-//C:\Users\Balanag PC\Desktop\TouchAGrass\Touch_A_Grass\src\Components\2Main\Components\ConditionalComponents\ErrorMessage.tsx
+//Error Component Appears in Footer buttons
 
 import React from "react";
 

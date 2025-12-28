@@ -7,7 +7,7 @@ import Instructioncarousel from './Components/2Main/Components/InstructionCarous
 import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import ErrorMessage from './Components/2Main/Components/ConditionalComponents/ErrorMessage';
-import type { ComponentVisibility } from './Components/2Main/Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
+import type { ComponentVisibility, ImgState } from './Components/2Main/Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
 import Logo from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/assets/Logo.png";
 
 function App() {
@@ -15,23 +15,50 @@ function App() {
   const [componentVisibility, setComponentVisibility] = useState<ComponentVisibility>({
     interactiveImgComponentVisibility: false,
     shopVisibility: false,
-    instructionsVisibility: false, // excluded
+    instructionsVisibility: false,
     logInVisibility: false,
     itemStorageVisibility: false,
     achievementsVisibility: false,
-    navbarHambugerVisibility: false, // excluded
+    navbarHambugerVisibility: false, 
     customizationVisibility: false,
   });
+
+  //disable schrolling when any conditional component is visible
 useEffect(() => {
-  const excludeKeys: (keyof ComponentVisibility)[] = ['navbarHambugerVisibility', 'instructionsVisibility'];
-  const anyVisible = (Object.keys(componentVisibility) as (keyof ComponentVisibility)[])
-    .some(key => !excludeKeys.includes(key) && componentVisibility[key]);
-  document.body.style.overflow = anyVisible ? 'hidden' : 'auto';
+  const isAnyVisible = Object.values(componentVisibility).some(Boolean);
+  
+  document.body.style.overflow = isAnyVisible ? 'hidden' : 'auto';
+    
+  //from Ai
+  let backdrop = document.getElementById('modal-backdrop');
+  if (isAnyVisible) {
+    if (!backdrop) {
+      backdrop = document.createElement('div');
+      backdrop.id = 'modal-backdrop';
+      backdrop.style.cssText = `
+        position: fixed;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.3);
+        backdrop-filter: blur(4px);
+        z-index: 0;
+        pointer-events: none;
+      `;
+      document.body.appendChild(backdrop);
+    }
+  } else {
+    if (backdrop) {
+      backdrop.remove();
+    }
+  }
+  //End
 }, [componentVisibility]);
+
+
+
 
 /*End */
 
-/*For instruction component,it will show only once (when user first enteres the website) */
+/*For instruction component,it will show only once (when user first enters the website) */
 useEffect(() => {
   const hasSeen = localStorage.getItem("hasSeenInstructions");
 
@@ -49,8 +76,7 @@ if (!hasSeen) {
 /*End */
 
 //For Customization
-
-const [img, setImg] = useState<any>(() => {
+const [img, setImg] = useState<ImgState>(() => {
   const stored = localStorage.getItem("img");
   return stored ? JSON.parse(stored) : { logo: Logo, 1: null, 2: null, 3: null };
 });
@@ -58,7 +84,7 @@ const [img, setImg] = useState<any>(() => {
 useEffect(() => {
   localStorage.setItem("img", JSON.stringify(img));
 }, [img]);
-
+//End
   return (
     <Routes>
       <Route

@@ -1,8 +1,9 @@
+//Achievemnt Component ,Can be triggered on navbar => achhievemnt btn, here you can claim currencies by completing tasks
+
 import { BronzeMedal, SilverMedal, GoldMedal } from '../Imports';
 import type { Achievement, AchievementCardProps, ComponentVisibility, ItemStorage, AchievementsProps, DifficultyStyle } from './ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
 
-/* TYPESCRIPT — ALL any */
-
+//CSS For different achievements
 const difficultyColor: { [key: string]: DifficultyStyle } = {
   Easy: {
     textColor: "text-green-400",
@@ -27,6 +28,8 @@ const difficultyColor: { [key: string]: DifficultyStyle } = {
   },
 };
 
+
+//Reusable Component
 function AchievementCard({ achievement, setAchievement, dispatch }: AchievementCardProps) {
   const colors = difficultyColor[achievement.difficulty] || {};
 
@@ -79,7 +82,7 @@ function AchievementCard({ achievement, setAchievement, dispatch }: AchievementC
 }
 
 function Achievements({
-  achievement,
+  achievement, //Found In "ForAchievemnt File" ,Easy To add More Achievent Via this file
   setAchievement,
   itemStorage,
   setComponentVisibility,
@@ -102,7 +105,6 @@ function Achievements({
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mt-12">
           {achievement
-            .filter(item => item !== null && item !== undefined) // <- ADD THIS FILTER
             .map((reusableComponent: Achievement) => (
               <AchievementCard 
                 key={reusableComponent.id} 

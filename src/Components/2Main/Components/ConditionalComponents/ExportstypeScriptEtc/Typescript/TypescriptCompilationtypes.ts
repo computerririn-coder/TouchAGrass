@@ -1,4 +1,12 @@
+//Typescripts
+
 import type { Dispatch, SetStateAction } from "react";
+
+export type NavBarProps = {
+  componentVisibility: ComponentVisibility;
+  setComponentVisibility: Dispatch<SetStateAction<ComponentVisibility>>;
+  img: ImgState;
+};
 
 /* Shop */
 export type ShopItem = {
@@ -64,10 +72,18 @@ export type ComponentVisibility = {
   customizationVisibility: boolean;
   navbarHambugerVisibility:boolean;
 };
+export type ImgState = {
+  logo: string;
+  icon1: string | null;
+  icon2: string | null;
+  icon3: string | null;
+};
 
 export type MainProps = {
   componentVisibility: ComponentVisibility;
   setComponentVisibility: React.Dispatch<React.SetStateAction<ComponentVisibility>>;
+  img: ImgState; 
+  setImg: React.Dispatch<React.SetStateAction<ImgState>>; 
 };
 
 /* End */
@@ -124,7 +140,7 @@ export type ItemStorage = {
   price: number | string;
   type?: string;
 };
-pp
+
 export type AchievementsProps = {
   achievement: Achievement[];
   itemStorage: PurchasedItem[]; 
@@ -219,6 +235,8 @@ export type CustomizationProps = {
   };
   setWords: React.Dispatch<React.SetStateAction<{ title: string; words: string[] }>>;
   setComponentVisibility: React.Dispatch<React.SetStateAction<ComponentVisibility>>;
+    img: ImgState; 
+  setImg: React.Dispatch<React.SetStateAction<ImgState>>; 
 };
 
 /*End */

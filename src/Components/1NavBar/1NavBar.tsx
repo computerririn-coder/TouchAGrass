@@ -1,8 +1,9 @@
 import Logo from "../../assets/Logo.png";
 import NavBg from "../../assets/NavBarBackground.jpg";
-import type ItemStorage from "../2Main/Components/ConditionalComponents/ItemStorageComponent";
+import type { NavBarProps } from "../2Main/Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
 
-function NavBar({ componentVisibility,setComponentVisibility, img }) {
+
+function NavBar({ componentVisibility,setComponentVisibility, img }: NavBarProps) {
   return (
     <nav
       className="w-full h-14 bg-cover bg-center shadow-md bg-gradient-to-b from-blue-700 to-green-600"
@@ -22,7 +23,7 @@ function NavBar({ componentVisibility,setComponentVisibility, img }) {
           <span
             className="font-medium tracking-wide whitespace-nowrap truncate"
             onClick={() =>
-              setComponentVisibility((prev): boolean => ({
+              setComponentVisibility((prev) => ({
                 ...prev,
                 instructionsVisibility: true,
               }))
@@ -38,7 +39,7 @@ function NavBar({ componentVisibility,setComponentVisibility, img }) {
           <span
             className="font-medium tracking-wide whitespace-nowrap truncate"
             onClick={() =>
-              setComponentVisibility((prev): boolean => ({
+              setComponentVisibility((prev) => ({
                 ...prev,
                 customizationVisibility: true,
               }))

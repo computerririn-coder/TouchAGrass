@@ -1,4 +1,4 @@
-//personal note: i might thrash this code and make a better one(likely)
+//ShopComponent: found in navbar, lets user buy items using currency(the leaf,grass and treasure)
 
 import { Leaf2, Grass2, Treasure2 ,shop_leaf1,shop_leaf2, shop_leaf3, shop_grass1, shop_grass2, shop_grass3, 
          shop_treasure1, shop_treasure2, shop_treasure3 } from "../Imports";

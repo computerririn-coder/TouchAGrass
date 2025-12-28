@@ -1,3 +1,5 @@
+//LogIn: Found in NavBar "LogIn" btn, lets user Login Although its just Auth From google with no functionaly whatsoever, purely design 
+
 import { useState, useEffect } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 

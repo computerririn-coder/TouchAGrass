@@ -1,3 +1,5 @@
+//ConditionalQuestiobDisplay:  This is a conditional Component that appears when any of the img(leaf,grass,treasure) is Click
+
 import { useState, useEffect, useRef } from "react";
 import Countdown from "react-countdown";
 import type {ConditionalQuestionDisplayComponentProps, InteractiveImgProps  } from "./ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes";
@@ -54,7 +56,7 @@ function handleAnswer(choice: string) {
       handleFeedback();
       dispatch({ type: `INCREMENT_${conditionalQuestionDisplayProps.type}` });
 
-      // Update achievement if the type is treasure
+
       if (conditionalQuestionDisplayProps.type === "treasure") {
         setAchievement((prev) =>
           prev.map((item, index) =>
@@ -73,11 +75,7 @@ function handleAnswer(choice: string) {
 }
 
 
-  useEffect(() => {
-    return () => {
-      if (timeoutRef.current) clearTimeout(timeoutRef.current);
-    };
-  }, []);
+
 
   
   const countdown = isDisabled ? Date.now() + 3000 : null;

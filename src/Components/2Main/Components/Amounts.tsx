@@ -1,4 +1,6 @@
-import NavBg from '../../../assets/NavBarBackground.jpg';
+//Ammounts: i cant think of a different
+
+
 import type { AmountsProps } from './ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
 function Amounts({
   state,
