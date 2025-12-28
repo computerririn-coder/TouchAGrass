@@ -8,7 +8,7 @@ import { useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import ErrorMessage from './Components/2Main/Components/ConditionalComponents/ErrorMessage';
 import type { ComponentVisibility, ImgState } from './Components/2Main/Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
-import Logo from "C:/Users/Balanag PC/Desktop/TouchAGrass/Touch_A_Grass/src/assets/Logo.png";
+import Logo from "./assets/Logo.png"; 
 
 function App() {
   /*Conditional Components Visibility */
