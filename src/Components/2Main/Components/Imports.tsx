@@ -17,16 +17,15 @@ export { default as SilverMedal } from '../../../assets/Silver_Medal.jpg';
 export { default as GoldMedal } from '../../../assets/Gold_Medal.jpg';
 
 /*Shop */
-
-//leaf
-export { default as shop_leaf1 } from "@/assets/shop_leaf1.jpg";
-export { default as shop_leaf2 } from "@/assets/shop_leaf2.jpg";
-export { default as shop_leaf3 } from "@/assets/shop_leaf3.jpg";
+// leaf
+export { default as shop_leaf1 } from "../../../assets/shop_leaf1.jpg";
+export { default as shop_leaf2 } from "../../../assets/shop_leaf2.jpg";
+export { default as shop_leaf3 } from "../../../assets/shop_leaf3.jpg";
 
 // grass
-export { default as shop_grass1 } from "@/assets/shop_grass1.jpg";
-export { default as shop_grass2 } from "@/assets/shop_grass2.jpg";
-export { default as shop_grass3 } from "@/assets/shop_grass3.webp";
+export { default as shop_grass1 } from "../../../assets/shop_grass1.jpg";
+export { default as shop_grass2 } from "../../../assets/shop_grass2.jpg";
+export { default as shop_grass3 } from "../../../assets/shop_grass3.webp";
 
 
 export { default as shop_treasure1 } from "../../../assets/shop_treasure1.jpg";
