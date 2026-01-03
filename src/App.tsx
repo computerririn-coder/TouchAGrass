@@ -10,6 +10,7 @@ import ErrorMessage from './Components/2Main/Components/ConditionalComponents/Er
 import type { ComponentVisibility, ImgState } from './Components/2Main/Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
 import Logo from "./assets/Logo.png"; 
 
+
 function App() {
   /*Conditional Components Visibility */
   const [componentVisibility, setComponentVisibility] = useState<ComponentVisibility>({
@@ -78,7 +79,7 @@ if (!hasSeen) {
 //For Customization
 const [img, setImg] = useState<ImgState>(() => {
   const stored = localStorage.getItem("img");
-  return stored ? JSON.parse(stored) : { logo: Logo, 1: null, 2: null, 3: null };
+  return stored ? JSON.parse(stored) : { logo: Logo}; //removed 1: null, 2: null, 3: null 
 });
 
 useEffect(() => {
