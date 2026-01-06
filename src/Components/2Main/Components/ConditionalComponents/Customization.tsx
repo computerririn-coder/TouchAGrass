@@ -239,7 +239,7 @@ function Customization({
                 <img
                   src={img.logo}
                   alt="Logo Image"
-                  className="w-[30%] h-[30%]"
+                  className="w-full h-full object-contain p-2 max-w-30"
                 />
               </div>
             </div>
@@ -256,11 +256,11 @@ function Customization({
           <div
             className="flex flex-col items-center gap-3 bg-gray-50 sm:p-4
             rounded-xl border border-gray-200 w-full lg:w-[50%]
-            bg-gradient-to-b from-blue-500 to-green-400 min-h-[150px]"
+            bg-gradient-to-b from-blue-500 to-green-400 p-5"
           >
             {/* Image placeholder */}
-            <div className="w-full h-32 bg-gray-300 flex items-center justify-center rounded-xl">
-              <img src={img.logo} alt="Pokemon Image Preview" />
+            <div className="w-full h-32 bg-gray-300 flex items-center justify-center rounded-xl ">
+              <img src={img.logo} alt="Pokemon Image Preview" className="w-full h-full object-contain p-2 max-w-30" />
             </div>
 
             {/* Label + Input */}
@@ -269,7 +269,7 @@ function Customization({
               <input
                 type="text"
                 className="mt-1 w-full rounded border border-gray-800 p-2 text-black"
-                placeholder="Enter value"
+                placeholder="Ditto"
                 onChange={(e) => setApiImage(e.target.value)}
               />
             </label>
