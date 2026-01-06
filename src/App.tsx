@@ -9,7 +9,6 @@ import { Routes, Route } from 'react-router-dom';
 import ErrorMessage from './Components/2Main/Components/ConditionalComponents/ErrorMessage';
 import type { ComponentVisibility, ImgState } from './Components/2Main/Components/ConditionalComponents/ExportstypeScriptEtc/Typescript/TypescriptCompilationtypes';
 import Logo from "./assets/Logo.png"; 
-import Test1 from './Components/2Main/Components/Test1';
 
 
 
@@ -110,7 +109,6 @@ useEffect(() => {
             <Instructioncarousel />
             <SecondMain />
             <Footer />
-<Test1/>
           </>
         }
       />
